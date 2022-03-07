@@ -12,23 +12,23 @@ def show_attractions():
     keyword = request.args.get("keyword", type = str)
 
     if type(page) == int and page >= 0:
-        item_start_n = 1 + 12 * page
+        start_index = 12 * page
 
         if keyword:
             sql = ("SELECT name, category, description, address, transport, mrt, latitude, longitude, images FROM spots WHERE name LIKE %s LIMIT %s, %s")
-            sql_data = ("%" + keyword + "%", item_start_n - 1, 12)
+            sql_data = ("%" + keyword + "%", start_index, 12)
 
-            # Check next page if exists
+            # Check if next page exists
             count_sql = ("SELECT id FROM spots WHERE name LIKE %s ORDER BY id LIMIT %s, %s")
-            count_sql_data = ("%" + keyword + "%", item_start_n + 11, 1)
+            count_sql_data = ("%" + keyword + "%", start_index + 12, 1)
 
         else:
             sql = ("SELECT name, category, description, address, transport, mrt, latitude, longitude, images FROM spots LIMIT %s, %s")
-            sql_data = (item_start_n - 1, 12)
+            sql_data = (start_index, 12)
 
-            # Check next page if exists
+            # Check if next page exists
             count_sql = ("SELECT id FROM spots ORDER BY id LIMIT %s, %s")
-            count_sql_data = (item_start_n + 11, 1)
+            count_sql_data = (start_index + 12, 1)
 
         results = db.execute_sql(sql, sql_data, "all")
         for result in results:
