@@ -6,29 +6,35 @@
         <title>Taipei Trip 台北一日遊</title>
         <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" />
     </head>
-    <body>
+    <body onload="init();">
         <div class="header">
-            <div class="nav-bar">
+            <div class="container">
                 <div class="title">台北一日遊</div>
-                <div class="menu">
-                    <button class="item">預定行程</button>
-                    <button class="item">登入/註冊</button>
-                </div>
+                <ul class="menu">
+                    <li><a>預定行程</a></li>
+                    <li><a>登入/註冊</a></li>
+                </ul>
             </div>
         </div>
+
         <div class="welcome">
-            <div class="welcome-content">
+            <div class="container">
                 <div class="slogan">
-                    <div class="slogan-header">輕鬆享受台北一日悠閒</div>
-                    <div class="slogan-body">探索每個角落，體驗城市的深度旅遊行程</div>
-                    <form class="search">
+                    <div id="slogan-header">輕鬆享受台北一日悠閒</div>
+                    <div id="slogan-body">探索每個角落，體驗城市的深度旅遊行程</div>
+                    <div class="search">
                         <input type="text" placeholder="輸入景點名稱查詢"></input>
-                        <button class="icon-search"><img id="icon-search" src="{{url_for('static', filename='img/icon_search.png')}}" /></button>
-                    </form>
+                        <button class="icon-search"><img id="icon-search-img" src="{{url_for('static', filename='img/icon_search.png')}}" /></button>
+                    </div>
                 </div>
-                <div class="welcome-img"><img src="{{url_for('static', filename='img/welcome 1.png')}}" /></div>
+                <div id="welcome-img"><img src="{{url_for('static', filename='img/welcome 1.png')}}" /></div>
             </div>
         </div>
+        
+
+        <div id="content" class="content"></div>
         <div class="footer">COPYRIGHT © 2021 台北一日遊</div>
+
+        <script src="{{url_for('static', filename='js/index.js')}}"></script>
     </body>
 </html>
