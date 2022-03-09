@@ -16,7 +16,6 @@ body{
     width: 1200px;
 }
 
-
 /* header */
 .header{
     position: sticky;
@@ -25,7 +24,6 @@ body{
     justify-content: center;
     height: 54px;
     background: #FFFFFF;
-    
 }
 
 .title{
@@ -49,7 +47,6 @@ li{
     font-size: 16px;
     color: #666666;
 }
-
 
 /* welcome */
 .welcome{
@@ -118,7 +115,6 @@ input{
     width: 650px;
     margin-left: 208px;
 }
-
 
 /* content */
 .content{
