@@ -93,7 +93,7 @@ for table_name in TABLES:
 
 
 # Inserting datas
-DATAS_PATH = "app/data/taipei-attractions.json"
+DATAS_PATH = "taipei-attractions.json"
 
 with open (DATAS_PATH) as f:
     datas = json.load(f)
@@ -146,7 +146,6 @@ cursor.execute("SET group_concat_max_len=102400")
 cursor.execute("UPDATE spots s INNER JOIN (SELECT s.name, GROUP_CONCAT(DISTINCT i.image_url) AS `images` "
                "FROM spots s, images i WHERE s.name = i.name GROUP BY s.name) temp "
                "ON s.name = temp.name SET s.images = temp.images")
-
 
 cnx.commit()
 
