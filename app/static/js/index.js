@@ -12,8 +12,6 @@ let fetchPage = async(reqUrl) => {
     .then(function(datas){
         getSpots(datas);
         infiniteScroll(datas);
-    }).catch((error) => {
-        console.log(error);
     })
 }
 
@@ -62,7 +60,7 @@ let showSearchSpots = () => {
             keywordUrl = `&keyword=${searchWord}`;
         } else{
             keywordUrl = ``;
-        }
+        };
         
         reqUrl = `/api/attractions?page=0` + keywordUrl;
 
@@ -85,23 +83,21 @@ let infiniteScroll = (jsonObj) => {
             .then(function(datas){
                 getSpots(datas);
                 nextPage = datas["nextPage"];
-            }).catch((error) => {
-                console.log(error);
             })
         } else{
             observer.unobserve(loadingObserver);
         }
     }
     
-    let callback = (entries) => {
-        if (entries[0].isIntersecting){
+    let callback = ([entry]) => {
+        if (entry && entry.isIntersecting){
             checkOnLoad(function(){
                 loadNextPage();
             });
-        }
+        };
     }
 
-    let observer = new IntersectionObserver(callback);
+    let observer = new IntersectionObserver(callback, {threshold: 0.75});
     observer.observe(loadingObserver);
 }
 
