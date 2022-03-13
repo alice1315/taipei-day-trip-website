@@ -21,6 +21,7 @@ class Database:
 
     def get_connection(self):
         cnx = self.cnxpool.get_connection()
+
         return cnx
 
     def execute_sql(self, sql, sql_data, method):

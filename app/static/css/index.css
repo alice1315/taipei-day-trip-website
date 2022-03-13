@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
+
+/* base */
+body{
+    margin: 0;
+    font-family: 'Noto Sans TC', sans-serif;
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: none;
+    width: 1200px;
+}
+
+/* header */
+.header{
+    position: fixed;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 54px;
+    background: #FFFFFF;
+}
+
+.title{
+    flex: none;
+    text-align: left;
+    font-size: 30px;
+    font-weight: bold;
+    color: #448899;
+}
+
+.menu{
+    display: flex;
+    justify-content: flex-end;
+    flex: none;
+}
+
+li{
+    list-style: none;
+    flex: none;
+    width: 100px;
+    font-size: 16px;
+    color: #666666;
+}
+
+/* welcome */
+.welcome{
+    position: relative;
+    top: 54px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+}
+
+.slogan{
+    flex: none;
+    text-align: left;
+    z-index: 2;
+}
+
+#slogan-header{
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #F8F8F8;
+    text-shadow: 0px 0px 30px #AABBCC;
+}
+
+#slogan-body{
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #F8F8F8;
+}
+
+.search{display: flex;}
+
+input{
+    flex: none;
+    width: 400px;
+    height: 46px;
+    border: 0;
+    border-radius: 5px 0 0 5px;
+    background: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    color: #757575;
+    padding: 0 0 0 10px;
+}
+
+.icon-search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: none;
+    width: 60px;
+    height: 46px;
+    border: 0;
+    border-radius: 0 5px 5px 0;
+    background-color: none;
+    background: #448899;
+}
+
+#icon-search-img{
+    width: 30px;
+	height: 30px;
+	object-fit: cover;
+}
+
+#welcome-img{
+    display: flex;
+    justify-items: bottom;
+    width: 650px;
+    margin-left: 208px;
+}
+
+/* content */
+.content{
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 1200px;
+    margin: 94px 0;
+}
+
+.item{
+    margin: 14px;
+    width: 270px;
+    min-height: 242px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.pic{height: 160px;}
+
+.pic img{
+    width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.name{
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #757575;
+}
+
+.info{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    font-size: 16px;
+    color: #757575;
+}
+
+/* footer */
+.footer{
+    height: 104px;
+    line-height: 104px;
+    background: #757575;
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1400px){
+    .container{width: 90%;}
+
+    #welcome-img{
+        position: absolute;
+        right: 50px;
+        bottom: 0;
+        width: 600px;
+        z-index: 1;
+    }
+
+    #welcome-img img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .content{
+        width: 90%;
+        justify-content: center;
+    }
+
+    .item{
+        width: 322px;
+        min-height: 280px;
+    }
+    
+    .pic{height: 202px;}
+}
+
+@media screen and (max-width: 600px){
+    .container{width: 92%}
+    li{
+        width: 72px;
+        margin-right: 5px;
+    }
+
+    .welcome{
+        height: 280px;
+        overflow: hidden;
+    }
+
+    #welcome-img{
+        position: absolute;
+        right: -60px;
+        bottom: 0;
+        width: 276px;
+        z-index: 1;
+    }
+
+    #welcome-img img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .slogan{width: 90%}
+    input{width: 230px}
+    .icon-search{width: 60px}
+    .content{
+        width: 90%;
+        justify-content: center;
+    }
+
+    .item{
+        margin: 14px 0;
+        width: 322px;
+        min-height: 280px;
+    }
+    
+    .pic{height: 202px;}
+}
+    
