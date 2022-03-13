@@ -1,5 +1,5 @@
-var reqUrl;
 var keywordUrl = ``;
+var reqUrl;
 
 let init = () => {
     reqUrl = `/api/attractions?page=0`;
@@ -54,44 +54,49 @@ let getSpots = (jsonObj) => {
 }
 
 let showSearchSpots = () => {
-    checkOnLoad(function(){
-        let searchWord = document.getElementById("search-word").value;
-        if (searchWord != ``){
-            keywordUrl = `&keyword=${searchWord}`;
-        } else{
-            keywordUrl = ``;
-        };
-        
-        reqUrl = `/api/attractions?page=0` + keywordUrl;
+    nextPage = 0;
+    let searchWord = document.getElementById("search-word").value;
+    if (searchWord != ``){
+        keywordUrl = `&keyword=${searchWord}`;
+    } else{
+        keywordUrl = ``;
+    };
+    
+    reqUrl = `/api/attractions?page=0` + keywordUrl;
 
-        let content = document.getElementById("content");
-        content.innerHTML = ``;
+    let content = document.getElementById("content");
+    content.innerHTML = ``;
 
-        fetchPage(reqUrl);
-    });
+    fetchPage(reqUrl);
+    
+    return false;
 }
 
 let infiniteScroll = (jsonObj) => {
     let loadingObserver = document.querySelector(".observer");
-    let nextPage = jsonObj["nextPage"];
+    nextPage = jsonObj["nextPage"];
 
     let loadNextPage = async() => {
-        if (nextPage !== null){
-            reqUrl = `/api/attractions?page=${nextPage}` + keywordUrl;
+        let nextPageUrl = `/api/attractions?page=${nextPage}` + keywordUrl;
+        
+        if (nextPage != null && nextPageUrl != reqUrl){
+            reqUrl = nextPageUrl;
             await fetch(reqUrl)
             .then(resp => resp.json())
             .then(function(datas){
                 getSpots(datas);
                 nextPage = datas["nextPage"];
-            })
-        } else{
+            });
+        } else if (nextPage == null){
             observer.unobserve(loadingObserver);
-        }
+        } else{
+
+        };
     }
     
     let callback = ([entry]) => {
         if (entry && entry.isIntersecting){
-            checkOnLoad(function(){
+            checkImgOnLoad(function(){
                 loadNextPage();
             });
         };
@@ -101,18 +106,18 @@ let infiniteScroll = (jsonObj) => {
     observer.observe(loadingObserver);
 }
 
-let checkOnLoad = (event) => {
+let checkImgOnLoad = (event) => {
     let container = document.getElementsByTagName("body")[0];
     let imgs = container.getElementsByTagName("img");
 
     let loaded = imgs.length;
     for (let i = 0; i < imgs.length; i++){
         if (imgs[i].complete){
-            loaded--;
+            loaded --;
         }
         else{
             imgs[i].addEventListener("load", function(){
-                loaded--;
+                loaded --;
                 if (loaded == 0){
                     event();
                 }
