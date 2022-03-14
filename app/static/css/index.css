@@ -19,6 +19,7 @@ body{
 /* header */
 .header{
     position: fixed;
+    top: 0;
     z-index: 3;
     display: flex;
     justify-content: center;
@@ -27,7 +28,7 @@ body{
     background: #FFFFFF;
 }
 
-.title{
+.web-title{
     flex: none;
     text-align: left;
     font-size: 30px;
@@ -127,7 +128,8 @@ input{
     display: inline-flex;
     flex-wrap: wrap;
     width: 1200px;
-    margin: 94px 0;
+    margin-top: 94px;
+    margin-bottom: 150px;
 }
 
 .item{
@@ -164,6 +166,7 @@ input{
 
 /* footer */
 .footer{
+    width: 100%;
     height: 104px;
     line-height: 104px;
     background: #757575;
