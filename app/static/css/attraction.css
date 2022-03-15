@@ -76,18 +76,51 @@ li{
     margin: 37px 0;
 }
 
-.spot-img{
+/* image */
+
+.images{
+    position: relative;
     width: 540px;
     height: 406px;
+    z-index: 1;
 }
 
-.spot-img img{
+.images img{
     width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
 
-.name{
+.img-button{
+    position: absolute;
+    top: 185px;
+    width: 36px;
+    height: 36px;
+    border-style: none;
+    border-radius: 50%;
+    background: none;
+    padding: 0;
+    z-index: 2;
+}
+
+#left{
+    left: 10px;
+}
+
+#right{
+    right: 10px;
+}
+
+.img-button img{
+    opacity: 75%;
+    width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* info */
+
+#name{
     font-size: 24px;
     font-weight: bold;
 }
@@ -114,8 +147,6 @@ li{
 .time {
     position: relative;
     padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

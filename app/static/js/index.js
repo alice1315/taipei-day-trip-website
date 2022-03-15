@@ -47,6 +47,11 @@ let getSpots = (jsonObj) => {
             spotItem.appendChild(spotInfo);
             spotInfo.appendChild(spotMrt);
             spotInfo.appendChild(spotCat);
+
+            let spotId = spots[i]["id"];
+            spotItem.onclick = function(){
+                location.href = `/attraction/${spotId}`;
+            };
         }
     } else{
         document.getElementById("content").innerText = `查無資訊`;
