@@ -29,6 +29,7 @@ body{
 }
 
 .web-title{
+    cursor: pointer;
     flex: none;
     text-align: left;
     font-size: 30px;
@@ -43,6 +44,7 @@ body{
 }
 
 li{
+    cursor: pointer;
     list-style: none;
     flex: none;
     width: 100px;
@@ -98,6 +100,7 @@ input{
 }
 
 .icon-search{
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -133,6 +136,7 @@ input{
 }
 
 .item{
+    cursor: pointer;
     margin: 14px;
     width: 270px;
     min-height: 242px;

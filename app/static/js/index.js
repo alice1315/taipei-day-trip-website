@@ -1,10 +1,19 @@
 var keywordUrl = ``;
 var reqUrl;
 
-let init = () => {
+function init (){
     reqUrl = `/api/attractions?page=0`;
     fetchPage(reqUrl);
 }
+
+// function initData (){
+//     return fetch(reqUrl)
+//     .then((resp) => {
+//         return resp.json();
+//     }).then((result) => {
+//         data = result;
+//     });
+// }
 
 let fetchPage = async(reqUrl) => {
     await fetch(reqUrl)
@@ -19,7 +28,7 @@ let getSpots = (jsonObj) => {
     let spots = jsonObj["data"];
 
     if(spots.length > 0){
-        for (i = 0; i < spots.length; i++){
+        for (let i = 0; i < spots.length; i++){
             let spotItem = document.createElement("div");
             let spotPic = document.createElement("div");
             let spotImg = document.createElement("img");

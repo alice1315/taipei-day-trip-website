@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
 
 /* base */
+
+*{box-sizing: border-box;}
+
 body{
-    /* display: flex;
-    justify-content: center; */
     margin: 0;
     font-family: 'Noto Sans TC', sans-serif;
     color: #666666;
 }
 
 .container{
-    display: flex;
+    display: inline-flex;
     justify-content: space-between;
     align-items: center;
     flex: none;
@@ -41,6 +42,7 @@ body{
 }
 
 .web-title{
+    cursor: pointer;
     flex: none;
     text-align: left;
     font-size: 30px;
@@ -55,6 +57,7 @@ body{
 }
 
 li{
+    cursor: pointer;
     list-style: none;
     flex: none;
     width: 100px;
@@ -77,57 +80,97 @@ li{
 }
 
 /* image */
-
-.images{
+#slideshow-container{
+    flex: none;
+    display: flex;
+    justify-content: center;
     position: relative;
+}
+
+#slideshow-container:hover .prev{display: block;}
+
+#slideshow-container:hover .next{display: block;}
+
+#slideshow-container:hover #dots{display: inline-flex;}
+
+.image{
+    display: none;
     width: 540px;
     height: 406px;
-    z-index: 1;
 }
 
-.images img{
+.image img{
     width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
 
-.img-button{
+.prev, .next{
+    cursor: pointer;
+    display: none;
     position: absolute;
-    top: 185px;
+    top: 50%;
+    margin-top: -18px;
     width: 36px;
     height: 36px;
-    border-style: none;
-    border-radius: 50%;
-    background: none;
-    padding: 0;
-    z-index: 2;
-}
-
-#left{
-    left: 10px;
-}
-
-#right{
-    right: 10px;
-}
-
-.img-button img{
     opacity: 75%;
-    width: 100%;
-	height: 100%;
-	object-fit: cover;
+    user-select: none;
+}
+
+.prev{left: 10px;}
+
+.next{right: 10px;}
+
+#dots{
+    display: none;
+    justify-content: center;
+    position: absolute;
+    bottom: 13px;
+    flex-wrap: wrap;
+}
+
+.dot{
+    cursor: pointer;
+    flex: none;
+    width: 12px;
+    height: 12px;
+    margin: 2px 6px;
+    opacity: 75%;
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 50%;
+    transition: background-color 0.6s ease;
+}
+
+.active {background-color: #000000;}
+
+  /* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 0.8s;
+    animation-name: fade;
+    animation-duration: 0.8s;
+}
+  
+@-webkit-keyframes fade {
+    from {opacity: .5} 
+    to {opacity: 1}
+}
+  
+@keyframes fade {
+    from {opacity: .5} 
+    to {opacity: 1}
 }
 
 /* info */
+.info-block{flex: none;}
 
 #name{
     font-size: 24px;
     font-weight: bold;
 }
 
-.info{
-    margin: 15px 0;
-}
+.info{margin: 15px 0;}
 
 /* order */
 .order{
@@ -141,7 +184,7 @@ li{
 .order-box{
     display: flex;
     align-items: center;
-    margin: 12px 0 0 20px;
+    margin: 10px 20px 0 20px;
 }
 
 .time {
@@ -156,12 +199,12 @@ li{
 .time input {
     position: absolute;
     opacity: 0;
-    cursor: pointer;
     height: 0;
     width: 0;
   }
 
 .checkmark {
+    cursor: pointer;
     position: absolute;
     bottom: 0;
     left: 7px;
@@ -194,6 +237,7 @@ li{
   }
 
 .btn{
+    cursor: pointer;
     width: 154px;
     height: 36px;
     margin: 20px 0 0 20px;
@@ -205,9 +249,7 @@ li{
     color: #FFFFFF;
 }
 
-.block{
-    margin-top: 50px;
-}
+.block{margin-top: 50px;}
 
 
 /* footer */
@@ -220,4 +262,63 @@ li{
     font-weight: bold;
     text-align: center;
     color: #FFFFFF;
+}
+
+@media screen and (min-width: 850px) and (max-width: 1400px){
+    .container{width: 90%;}
+
+    .content{width: 90%;}
+
+    #slideshow-container{
+        width: 50%;
+        height: 406px;
+    }
+
+    .image{
+        width: 100%;
+        height: auto;
+    }
+
+    .info-block{
+        flex: none;
+        width: 45%;}
+
+    .order{width: 100%;}
+}
+
+@media screen and (max-width: 850px){
+    .container{width: 92%}
+
+    li{
+        width: 72px;
+        margin-right: 5px;
+    }
+    
+    .content{width: 90%;}
+
+    .spot{
+        display: block;
+        width: 100%;
+    }
+
+    #slideshow-container{
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    .image{
+        width: 100%;
+        min-height: 350px;
+    }
+
+    .info-block{
+        margin-top: 520px;
+    }
+
+    .order{
+        width: 100%;
+    }
 }

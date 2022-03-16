@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/attraction.css')}}" />
     </head>
     <body onload="init();">
+        <!-- header -->
         <div class="header">
             <div class="container">
                 <div class="web-title" onclick="location.href = `/`;">台北一日遊</div>
@@ -16,14 +17,21 @@
                 </ul>
             </div>
         </div>
+
+        <!-- content -->
         <div class="content">
             <div class="spot">
-                <div class="images">
-                    <button class="img-button" id="right"><img src="{{url_for('static', filename='img/btn_rightArrow.png')}}"/></button>
-                    <button class="img-button" id="left"><img src="{{url_for('static', filename='img/btn_leftArrow.png')}}"/></button>
-                    <img id="spot-img"/>
+
+                <!-- images -->
+                <div id="slideshow-container">
+                    <a class="prev" onclick="plusSlides(-1)"><img src="{{url_for('static', filename='img/btn_leftArrow.png')}}"/></a>
+                    <a class="next" onclick="plusSlides(1)"><img src="{{url_for('static', filename='img/btn_rightArrow.png')}}"/></a>
+                
+                    <div id="dots"></div>
                 </div>
-                <div>
+
+                <!-- order -->
+                <div class="info-block">
                     <div id="name"></div>
                     <div class="info" class="text">
                         <span id="cat"></span> at <span id="mrt"></span>
@@ -63,6 +71,7 @@
 
             <hr/>
 
+            <!-- info -->
             <div class="block text" id="description"></div>
             <div class="block">
                 <div class="title">景點地址：</div>
