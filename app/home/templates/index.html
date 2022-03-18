@@ -21,7 +21,7 @@
                 <div class="slogan">
                     <div id="slogan-header">輕鬆享受台北一日悠閒</div>
                     <div id="slogan-body">探索每個角落，體驗城市的深度旅遊行程</div>
-                    <form class="search" onsubmit="return showSearchSpots();">
+                    <form class="search" onsubmit="searchKeyword(); return false;">
                         <input id="search-word" type="text" placeholder="輸入景點名稱查詢"></input>
                         <button class="icon-search" type="submit"><img id="icon-search-img" src="{{url_for('static', filename='img/icon_search.png')}}" /></button>
                     </form>

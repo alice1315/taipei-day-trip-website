@@ -4,7 +4,7 @@ var imageIndex = 1;
 
 async function init(){
     await initData();
-    render();
+    renderPage();
     showImages(imageIndex);
 }
 
@@ -17,7 +17,7 @@ function initData (){
     });
 }
 
-function render(){
+function renderPage(){
     let spot = data["data"];
 
     for (let i = 0; i < spot["images"].length; i++){
@@ -75,12 +75,10 @@ function showImages(n) {
     dots[imageIndex-1].className += " active";
 }
 
-// Next/previous controls
 function plusSlides(n) {
     showImages(imageIndex += n);
 }
 
-// Thumbnail image controls
 function currentSlide(n) {
     showImages(imageIndex = n);
 }
