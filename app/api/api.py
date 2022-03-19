@@ -15,7 +15,7 @@ def show_attractions():
         start_index = 12 * page
 
         if keyword:
-            sql = ("SELECT name, category, description, address, transport, mrt, latitude, longitude, images FROM spots WHERE name LIKE %s LIMIT %s, %s")
+            sql = ("SELECT id, name, category, description, address, transport, mrt, latitude, longitude, images FROM spots WHERE name LIKE %s LIMIT %s, %s")
             sql_data = ("%" + keyword + "%", start_index, 12)
 
             # Check if next page exists
@@ -23,7 +23,7 @@ def show_attractions():
             count_sql_data = ("%" + keyword + "%", start_index + 12, 1)
 
         else:
-            sql = ("SELECT name, category, description, address, transport, mrt, latitude, longitude, images FROM spots LIMIT %s, %s")
+            sql = ("SELECT id, name, category, description, address, transport, mrt, latitude, longitude, images FROM spots LIMIT %s, %s")
             sql_data = (start_index, 12)
 
             # Check if next page exists
@@ -51,12 +51,14 @@ def show_attractions():
 
 @api_.route("/attraction/<attractionId>", methods = ["GET"])
 def show_single_attraction(attractionId):
-    sql = ("SELECT name, category, description, address, transport, mrt, latitude, longitude, images FROM spots WHERE id=%s")
+    sql = ("SELECT id, name, category, description, address, transport, mrt, latitude, longitude, images FROM spots WHERE id=%s")
     sql_data = (attractionId, )
 
-    results = db.execute_sql(sql, sql_data, "one")
-    if results:
-        result_dict = {"data": results}
+    result = db.execute_sql(sql, sql_data, "one")
+    result["images"] = result["images"].split(",")
+
+    if result:
+        result_dict = {"data": result}
         return jsonify(result_dict)
     else:
         result_dict = {"error": True, "message": "Attraction id requested invalid"}

@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
+/* base */
+
+*{box-sizing: border-box;}
+
+body{
+    margin: 0;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #666666;
+}
+
+.container{
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: none;
+    width: 1200px;
+}
+
+.title{
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.text{
+    line-height: 24px;
+    font-size: 16px;
+}
+
+/* header */
+.header{
+    position: fixed;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 54px;
+    background: #FFFFFF;
+}
+
+.web-title{
+    cursor: pointer;
+    flex: none;
+    text-align: left;
+    font-size: 30px;
+    font-weight: bold;
+    color: #448899;
+}
+
+.menu{
+    display: flex;
+    justify-content: flex-end;
+    flex: none;
+}
+
+li{
+    cursor: pointer;
+    list-style: none;
+    flex: none;
+    width: 100px;
+    font-size: 16px;
+    text-align: center;
+    color: #666666;
+}
+
+/* content */
+.content{
+    margin: 91px auto 150px auto;
+    width: 1200px;
+}
+
+/* spot */
+.spot{
+    display: flex;
+    justify-content: space-around;
+    margin: 37px 0;
+}
+
+/* image */
+#slideshow-container{
+    flex: none;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+#slideshow-container:hover .prev{display: block;}
+
+#slideshow-container:hover .next{display: block;}
+
+#slideshow-container:hover #dots{display: inline-flex;}
+
+.image{
+    display: none;
+    width: 540px;
+    height: 406px;
+}
+
+.image img{
+    width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.prev, .next{
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 50%;
+    margin-top: -18px;
+    width: 36px;
+    height: 36px;
+    opacity: 75%;
+    user-select: none;
+}
+
+.prev{left: 10px;}
+
+.next{right: 10px;}
+
+#dots{
+    display: none;
+    justify-content: center;
+    position: absolute;
+    bottom: 13px;
+    flex-wrap: wrap;
+}
+
+.dot{
+    cursor: pointer;
+    flex: none;
+    width: 12px;
+    height: 12px;
+    margin: 2px 6px;
+    opacity: 75%;
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 50%;
+    transition: background-color 0.6s ease;
+}
+
+.active {background-color: #000000;}
+
+  /* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 0.8s;
+    animation-name: fade;
+    animation-duration: 0.8s;
+}
+  
+@-webkit-keyframes fade {
+    from {opacity: .5} 
+    to {opacity: 1}
+}
+  
+@keyframes fade {
+    from {opacity: .5} 
+    to {opacity: 1}
+}
+
+/* info */
+.info-block{flex: none;}
+
+#name{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.info{margin: 15px 0;}
+
+/* order */
+.order{
+    width: 600px;
+    height: 302px;
+    background: #E8E8E8;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.order-box{
+    display: flex;
+    align-items: center;
+    margin: 10px 20px 0 20px;
+}
+
+.time {
+    position: relative;
+    padding-left: 35px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+.time input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+  }
+
+.checkmark {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    left: 7px;
+    height: 22px;
+    width: 22px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+  }
+  
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+/* Show the indicator (dot/circle) when checked */
+.time input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+/* Style the checkmark/indicator */
+.time .checkmark:after {
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background-color: #448899;
+    border-radius: 50%;
+  }
+
+.btn{
+    cursor: pointer;
+    width: 154px;
+    height: 36px;
+    margin: 20px 0 0 20px;
+    background: #448899;
+    border-style: none;
+    border-radius: 5px;
+    font-size: 19px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.block{margin-top: 50px;}
+
+
+/* footer */
+.footer{
+    width: 100%;
+    height: 104px;
+    line-height: 104px;
+    background: #757575;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+@media screen and (min-width: 850px) and (max-width: 1400px){
+    .container{width: 90%;}
+
+    .content{width: 90%;}
+
+    #slideshow-container{
+        width: 50%;
+        height: 406px;
+    }
+
+    .image{
+        width: 100%;
+        height: auto;
+    }
+
+    .info-block{
+        flex: none;
+        width: 45%;}
+
+    .order{width: 100%;}
+}
+
+@media screen and (max-width: 850px){
+    .container{width: 92%}
+
+    li{
+        width: 72px;
+        margin-right: 5px;
+    }
+    
+    .content{width: 90%;}
+
+    .spot{
+        display: block;
+        width: 100%;
+    }
+
+    #slideshow-container{
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    .image{
+        width: 100%;
+        min-height: 350px;
+    }
+
+    .info-block{
+        margin-top: 520px;
+    }
+
+    .order{
+        width: 100%;
+    }
+}

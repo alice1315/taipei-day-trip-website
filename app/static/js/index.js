@@ -1,25 +1,36 @@
+var page;
+var nextPage;
+
 var keywordUrl = ``;
 var reqUrl;
+var data;
 
-let init = () => {
-    reqUrl = `/api/attractions?page=0`;
-    fetchPage(reqUrl);
+var loadingObserver;
+var observer;
+
+async function init (){
+    page = 0;
+    await initData();
+    renderPage();
+    infiniteScroll();
 }
 
-let fetchPage = async(reqUrl) => {
-    await fetch(reqUrl)
-    .then(resp => resp.json())
-    .then(function(datas){
-        getSpots(datas);
-        infiniteScroll(datas);
-    })
+function initData (){
+    reqUrl = `/api/attractions?page=${page}${keywordUrl}`
+
+    return fetch(reqUrl)
+    .then((resp) => {
+        return resp.json();
+    }).then((result) => {
+        data = result;
+    });
 }
 
-let getSpots = (jsonObj) => {
-    let spots = jsonObj["data"];
+function renderPage (){
+    let spots = data["data"];
 
     if(spots.length > 0){
-        for (i = 0; i < spots.length; i++){
+        for (let i = 0; i < spots.length; i++){
             let spotItem = document.createElement("div");
             let spotPic = document.createElement("div");
             let spotImg = document.createElement("img");
@@ -47,54 +58,53 @@ let getSpots = (jsonObj) => {
             spotItem.appendChild(spotInfo);
             spotInfo.appendChild(spotMrt);
             spotInfo.appendChild(spotCat);
+
+            let spotId = spots[i]["id"];
+            spotItem.onclick = function(){
+                location.href = `/attraction/${spotId}`;
+            };
         }
     } else{
         document.getElementById("content").innerText = `查無資訊`;
     }
 }
 
-let showSearchSpots = () => {
-    nextPage = 0;
-    let searchWord = document.getElementById("search-word").value;
-    if (searchWord != ``){
-        keywordUrl = `&keyword=${searchWord}`;
+async function searchKeyword (){
+    observer.unobserve(loadingObserver);
+    page = 0;
+
+    let keyword = document.getElementById("search-word").value;
+    if (keyword != ``){
+        keywordUrl = `&keyword=${keyword}`;
     } else{
         keywordUrl = ``;
     };
-    
-    reqUrl = `/api/attractions?page=0` + keywordUrl;
 
     let content = document.getElementById("content");
     content.innerHTML = ``;
 
-    fetchPage(reqUrl);
-    
-    return false;
+    await initData();
+    renderPage();
+    infiniteScroll();
 }
 
-let infiniteScroll = (jsonObj) => {
-    let loadingObserver = document.querySelector(".observer");
-    nextPage = jsonObj["nextPage"];
-
-    let loadNextPage = async() => {
-        let nextPageUrl = `/api/attractions?page=${nextPage}` + keywordUrl;
-        
-        if (nextPage != null && nextPageUrl != reqUrl){
-            reqUrl = nextPageUrl;
-            await fetch(reqUrl)
-            .then(resp => resp.json())
-            .then(function(datas){
-                getSpots(datas);
-                nextPage = datas["nextPage"];
-            });
+function infiniteScroll (){
+    loadingObserver = document.querySelector(".observer");
+    
+    async function loadNextPage (){
+        nextPage = data["nextPage"];
+        if (nextPage != null && nextPage != page){
+            page = nextPage;
+            await initData();
+            renderPage();
         } else if (nextPage == null){
             observer.unobserve(loadingObserver);
-        } else{
+        } else {
 
         };
     }
     
-    let callback = ([entry]) => {
+    function callback ([entry]){
         if (entry && entry.isIntersecting){
             checkImgOnLoad(function(){
                 loadNextPage();
@@ -102,11 +112,11 @@ let infiniteScroll = (jsonObj) => {
         };
     }
 
-    let observer = new IntersectionObserver(callback, {threshold: 0.75});
+    observer = new IntersectionObserver(callback, {threshold: 0.75});
     observer.observe(loadingObserver);
 }
 
-let checkImgOnLoad = (event) => {
+function checkImgOnLoad (event){
     let container = document.getElementsByTagName("body")[0];
     let imgs = container.getElementsByTagName("img");
 
