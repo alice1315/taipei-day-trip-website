@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta charset="utf-8" />
@@ -7,23 +8,25 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" />
     </head>
     <body onload="init();">
-        <div class="header">
-            <div class="container">
-                <div class="web-title" onclick="location.href = `/`;">台北一日遊</div>
-                <ul class="menu">
-                    <li><a>預定行程</a></li>
-                    <li><a>登入/註冊</a></li>
-                </ul>
-            </div>
-        </div>
+        <!-- header -->
+        {% extends "base.html" %}
+        {% block header %}
+            {{ super() }}
+        {% endblock header %}
+
+        {% block signin%}
+        {% endblock signin%}
+
+        <!-- content -->
+        {% block content %}
         <div class="welcome">
             <div class="container">
                 <div class="slogan">
                     <div id="slogan-header">輕鬆享受台北一日悠閒</div>
                     <div id="slogan-body">探索每個角落，體驗城市的深度旅遊行程</div>
                     <form class="search" onsubmit="searchKeyword(); return false;">
-                        <input id="search-word" type="text" placeholder="輸入景點名稱查詢"></input>
-                        <button class="icon-search" type="submit"><img id="icon-search-img" src="{{url_for('static', filename='img/icon_search.png')}}" /></button>
+                        <input id="search-word" class="search-input" type="text" placeholder="輸入景點名稱查詢"></input>
+                        <button class="search-btn" type="submit"><img id="search-img" src="{{url_for('static', filename='img/icon_search.png')}}" /></button>
                     </form>
                 </div>
                 <div id="welcome-img"><img src="{{url_for('static', filename='img/welcome 1.png')}}" /></div>
@@ -31,10 +34,17 @@
         </div>
 
         <div id="content" class="content"></div>
+        
         <div class="observer"></div>
 
-        <div class="footer">COPYRIGHT © 2021 台北一日遊</div>
-
         <script src="{{url_for('static', filename='js/index.js')}}"></script>
+        {% endblock content %}
+
+        <!-- footer -->        
+        {% block footer %}
+            {{ super() }}
+        {% endblock footer %}
+        
+        
     </body>
 </html>

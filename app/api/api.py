@@ -6,6 +6,12 @@ from . import api_
 from .. import db
 
 
+# Users
+# @api_.route("/user", methods = ["GET", "POST", "PATCH", "DELETE"])
+# def 
+
+
+# Attractions
 @api_.route("/attractions", methods = ["GET"])
 def show_attractions():
     page = request.args.get("page", type = int)

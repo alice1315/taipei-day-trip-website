@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}" />
+    </head>
+    <body>
+        {% block header %}
+        <div class="header">
+            <div class="container">
+                <div class="web-title" onclick="location.href = `/`;">台北一日遊</div>
+                <ul class="menu">
+                    <li><a>預定行程</a></li>
+                    <li><a>登入/註冊</a></li>
+                </ul>
+            </div>
+        </div>
+        {% endblock header %}
+
+        {% block signinup%}
+        <form class="sign signin">
+            <div class="sign-border"></div>
+            <div class="sign-title">登入會員帳號</div>
+            <button class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></button>
+
+            <input id="signin-email" class="sign-input" type="email" placeholder="輸入電子信箱" ></input>
+            <input id="signin-pwd" class="sign-input" type="password" placeholder="輸入密碼" ></input>
+            <button class="btn signin-btn" type="submit">登入帳戶</button>
+
+            <div class="signin-msg"></div>
+            <div class="text">還沒有帳戶？<a>點此註冊</a></div>
+        </form>
+
+        <form class="sign signup">
+            <div class="sign-border"></div>
+            <div class="sign-title">註冊會員帳號</div>
+            <button class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></button>
+
+            <input id="signin-email" class="sign-input" type="text" placeholder="輸入姓名" ></input>
+            <input id="signin-email" class="sign-input" type="email" placeholder="輸入電子信箱" ></input>
+            <input id="signin-pwd" class="sign-input" type="password" placeholder="輸入密碼" ></input>
+            <button class="btn signin-btn" type="submit">註冊新帳戶</button>
+
+            <div class="signin-msg"></div>
+            <div class="text">已經有帳戶了？<a>點此登入</a></div>
+        </form>
+
+        {% endblock signinup%}
+        
+        {% block content %}
+        {% endblock content %}
+        
+        {% block footer %}
+        <div class="footer">
+            COPYRIGHT © 2021 台北一日遊
+        </div>
+        {% endblock footer%}
+
+        <script src="{{url_for('static', filename='js/base.js')}}"></script>
+    </body>
+</html>
