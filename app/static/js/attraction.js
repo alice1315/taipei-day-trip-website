@@ -1,5 +1,5 @@
 var reqUrl = `/api` + window.location["pathname"];
-var data;
+var userData;
 var imageIndex = 1;
 
 async function init(){
@@ -13,12 +13,12 @@ function initData (){
     .then((resp) => {
         return resp.json();
     }).then((result) => {
-        data = result;
+        userData = result;
     });
 }
 
 function renderPage(){
-    let spot = data["data"];
+    let spot = userData["data"];
 
     for (let i = 0; i < spot["images"].length; i++){
         let imgItem = document.createElement("div");
@@ -55,8 +55,8 @@ function renderPage(){
 
 function showImages(n) {
     let i;
-    let images = document.getElementsByClassName("image");
-    let dots = document.getElementsByClassName("dot");
+    let images = document.querySelectorAll(".image");
+    let dots = document.querySelectorAll(".dot");
   
     if (n > images.length){
         imageIndex = 1;

@@ -1,24 +1,13 @@
 <!DOCTYPE html>
 <html>
-    
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta charset="utf-8" />
-        <title>Taipei Trip 台北一日遊</title>
         <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" />
     </head>
-    <body onload="init();">
-        <!-- header -->
+
+    <body onload="baseInit(); init();">
         {% extends "base.html" %}
-        {% block header %}
-            {{ super() }}
-        {% endblock header %}
 
-        {% block signin%}
-        {% endblock signin%}
-
-        <!-- content -->
-        {% block content %}
+        {% block body %}
         <div class="welcome">
             <div class="container">
                 <div class="slogan">
@@ -38,13 +27,7 @@
         <div class="observer"></div>
 
         <script src="{{url_for('static', filename='js/index.js')}}"></script>
-        {% endblock content %}
-
-        <!-- footer -->        
-        {% block footer %}
-            {{ super() }}
-        {% endblock footer %}
-        
+        {% endblock body %}
         
     </body>
 </html>

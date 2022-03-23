@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta charset="utf-8" />
-        <title>Taipei Trip 台北一日遊</title>
         <link rel="stylesheet" href="{{url_for('static', filename='css/attraction.css')}}" />
     </head>
-    <body onload="init();">
-        {% extends "base.html" %}
-        {% block header %}
-            {{ super() }}
-        {% endblock header %}
 
-        {% block content %}
-        <!-- content -->
+    <body onload="baseInit(); init();">
+        {% extends "base.html" %}
+
+        {% block body %}
         <div class="content">
             <div class="spot">
 
@@ -79,13 +73,7 @@
         </div>
         
         <script src="{{url_for('static', filename='js/attraction.js')}}"></script>
-        {% endblock content %}
-
-        <div class="footer">
-            {% block footer %}
-                {{ super() }}
-            {% endblock footer %}
-        </div>
+        {% endblock body %}
         
     </body>
 </html>

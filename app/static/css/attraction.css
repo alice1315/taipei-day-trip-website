@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
 @import 'base.css';
 
+.sign{
+    text-align: center;
+}
+
 /* content */
 .content{
     margin: 91px auto 150px auto;

@@ -78,6 +78,16 @@ TABLES['images'] = (
     "  PRIMARY KEY (`id`),"
     "  FOREIGN KEY (`name`) REFERENCES spots(`name`))")
 
+TABLES['member'] = (
+    "CREATE TABLE `member` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `name` varchar(255) NOT NULL,"
+    "  `email` varchar(255) NOT NULL,"
+    "  `password` varchar(255) NOT NULL,"
+    "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "  PRIMARY KEY (`id`),"
+    "  UNIQUE (`email`))")
+
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:
@@ -91,7 +101,7 @@ for table_name in TABLES:
     else:
         print("OK")
 
-
+"""
 # Inserting datas
 DATAS_PATH = "taipei-attractions.json"
 
@@ -146,6 +156,8 @@ cursor.execute("SET group_concat_max_len=102400")
 cursor.execute("UPDATE spots s INNER JOIN (SELECT s.name, GROUP_CONCAT(DISTINCT i.image_url) AS `images` "
                "FROM spots s, images i WHERE s.name = i.name GROUP BY s.name) temp "
                "ON s.name = temp.name SET s.images = temp.images")
+
+"""
 
 cnx.commit()
 

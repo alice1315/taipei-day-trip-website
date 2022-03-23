@@ -3,7 +3,7 @@ var nextPage;
 
 var keywordUrl = ``;
 var reqUrl;
-var data;
+var userData;
 
 var loadingObserver;
 var observer;
@@ -22,12 +22,12 @@ function initData (){
     .then((resp) => {
         return resp.json();
     }).then((result) => {
-        data = result;
+        userData = result;
     });
 }
 
 function renderPage (){
-    let spots = data["data"];
+    let spots = userData["data"];
 
     if(spots.length > 0){
         for (let i = 0; i < spots.length; i++){
@@ -92,13 +92,14 @@ function infiniteScroll (){
     loadingObserver = document.querySelector(".observer");
     
     async function loadNextPage (){
-        nextPage = data["nextPage"];
+        nextPage = userData["nextPage"];
         if (nextPage != null && nextPage != page){
             page = nextPage;
             await initData();
             renderPage();
         } else if (nextPage == null){
             observer.unobserve(loadingObserver);
+            console.log("null: STOP");
         } else {
 
         };

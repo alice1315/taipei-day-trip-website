@@ -40,6 +40,8 @@ hr{
     color: #FFFFFF;
 }
 
+.hide{display: none;}
+
 /* header */
 .header{
     position: fixed;
@@ -74,20 +76,23 @@ li{
     flex: none;
     width: 100px;
     font-size: 16px;
+    text-align: center;
     color: #666666;
 }
 
 /* sign */
 .sign{
     position: fixed;
+    top: 80px;
     left: 0;
     right: 0;
-    z-index: 5;
+    z-index: 7;
     width: 340px;
-    margin: 80px auto auto auto;
+    margin: auto;
     background: #FFFFFF;
     box-shadow: 0px 4px 60px #AAAAAA;
     border-radius: 6px;
+    padding-bottom: 10px;
 }
 
 .sign-border{
@@ -103,6 +108,7 @@ li{
 }
 
 .close{
+    cursor: pointer;
     position: absolute;
     top: 27px;
     right: 17px;
@@ -123,15 +129,21 @@ li{
     padding-left: 15px;
 }
 
-.signin-btn{
+.sign-btn{
     width: 310px;
     height: 47px;
     margin-bottom: 10px;
 }
 
-.signin{height: 285px;}
+#signin-msg, #signup-msg{
+    margin-bottom: 10px;
+    color: red;
+}
 
-.signup{display: none;height: 342px;}
+#open-signup, #open-signin{
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 /* footer */
 .footer{

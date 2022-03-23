@@ -32,6 +32,8 @@ class Database:
                 result = cursor.fetchone()
             elif method == "all":
                 result = cursor.fetchall()
+            elif method == "rowcount":
+                result = cursor.rowcount
         except:
             self.cnx.rollback()
         finally:
