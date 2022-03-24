@@ -1,6 +1,7 @@
 var userUrl = "/api/user";
 var userData;
 
+var modal = document.getElementById("modal");
 var signInForm = document.getElementById("signin-form");
 var signUpForm = document.getElementById("signup-form");
 var signInMsg = document.getElementById("signin-msg");
@@ -14,7 +15,7 @@ var closeBtn = document.querySelectorAll(".close");
 
 async function baseInit(){
     toggleHeaderSign();
-    handleSignBlock();
+    handleBtns();
     signIn();
     signUp();
     signOut();
@@ -42,11 +43,7 @@ async function isSignedIn(){
 
 async function toggleHeaderSign(){
     if (await isSignedIn()){
-        hideBlock(signBtn);
-        showBlock(signOutBtn);
-    } else {
-        hideBlock(signOutBtn);
-        showBlock(signBtn);
+        toggleBlock(signBtn, signOutBtn);
     }
 }
 
@@ -71,7 +68,11 @@ function signIn(){
         }
     
         await initUserData(fetchOptions);
-        handleMessage(signInMsg);
+        showMessage(signInMsg);
+
+        if (userData["ok"]){
+            location.reload();
+        }
     }
 
     signInForm.addEventListener("submit", handleSignInSubmit);
@@ -99,7 +100,7 @@ function signUp(){
         };
     
         await initUserData(fetchOptions);
-        handleMessage(signUpMsg);
+        showMessage(signUpMsg);
     }
 
     signUpForm.addEventListener("submit", handleSignUpSubmit);
@@ -112,7 +113,7 @@ function signOut(){
         await initUserData(fetchOptions);
     
         if (userData["ok"]){
-            location.reload(true);
+            location.reload();
         }
     }
 
@@ -120,36 +121,53 @@ function signOut(){
 }
 
 // Message
-function handleMessage(target){
+function showMessage(target){
     if (!userData){
         target.innerText = "";
     }else if (userData["error"]){
         target.innerText = userData["message"];
-        userData = null;
     }else if(userData["ok"]){
-        location.reload(true);
+        if(target = signUpMsg){
+            target.innerText = "註冊成功！請重新登入";
+        }    
     }
 }
 
-// Block
-function showBlock(target){
-    target.classList.remove("hide");
+// Button handler
+function toggleBlock(...targets){
+    targets.forEach(target => target.classList.toggle("hide"))
 }
 
-function hideBlock(target){
-    target.classList.add("hide");
+function hideBlock(...targets){
+    targets.forEach(target => target.classList.add("hide"))
 }
 
-function handleSignBlock(){   
-    signBtn.addEventListener("click", function(){showBlock(signInForm)});
-    toSignInBtn.addEventListener("click", function(){showBlock(signInForm); hideBlock(signUpForm);});
-    toSignUpBtn.addEventListener("click", function(){showBlock(signUpForm); hideBlock(signInForm);});
-    closeBtn.forEach(
-        e => e.addEventListener("click", function(){
-            hideBlock(signInForm); 
-            hideBlock(signUpForm); 
-            handleMessage(signInMsg); 
-            handleMessage(signUpMsg);
-        })
-    )
+function resetForm(targetForm, targetMsg){
+    targetForm.reset();
+    targetMsg.innerText = "";
+}
+
+function handleSignBtn(){
+    toggleBlock(modal, signInForm);
+    signInForm.classList.add("slidein");
+}
+
+function handleToSignBtn(){
+    signInForm.classList.remove("slidein");
+    toggleBlock(signInForm, signUpForm);
+    resetForm(signInForm, signInMsg);
+    resetForm(signUpForm, signUpMsg);
+}
+
+function handleCloseBtn(){
+    hideBlock(modal, signInForm, signUpForm); 
+    resetForm(signInForm, signInMsg);
+    resetForm(signUpForm, signUpMsg);
+}
+
+function handleBtns(){   
+    signBtn.addEventListener("click", handleSignBtn);
+    toSignInBtn.addEventListener("click", handleToSignBtn);
+    toSignUpBtn.addEventListener("click", handleToSignBtn);
+    closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn))
 }

@@ -3,9 +3,11 @@ from flask import make_response
 from flask import jsonify
 from flask import session
 
+import jwt
+
 from . import api_
 from .. import db
-
+from app.auth.auth import Auth
 
 # Users
 @api_.route("/user", methods = ["GET"])
@@ -46,7 +48,15 @@ def sign_in():
                 session["id"] = result["id"]
                 session["name"] = result["name"]
                 session["email"] = result["email"]
-                result_dict = {"ok": True}
+
+                r_id = result["id"],
+                r_name = result["name"],
+                r_email = result["email"]
+
+                auth_token = Auth.encode_auth_token(r_id, r_name, r_email)
+                
+                result_dict = {"ok": True, "Authorization": auth_token}
+                # result_dict = {"ok": True}
                 return jsonify(result_dict)
             else:
                 result_dict = {"error": True, "message": "密碼輸入錯誤"}

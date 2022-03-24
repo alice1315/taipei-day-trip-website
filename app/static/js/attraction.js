@@ -1,5 +1,5 @@
 var reqUrl = `/api` + window.location["pathname"];
-var userData;
+var data;
 var imageIndex = 1;
 
 async function init(){
@@ -13,12 +13,12 @@ function initData (){
     .then((resp) => {
         return resp.json();
     }).then((result) => {
-        userData = result;
+        data = result;
     });
 }
 
 function renderPage(){
-    let spot = userData["data"];
+    let spot = data["data"];
 
     for (let i = 0; i < spot["images"].length; i++){
         let imgItem = document.createElement("div");

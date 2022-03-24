@@ -19,32 +19,34 @@
             </div>
         </div>
 
-        <form class="sign hide" method="PATCH" id="signin-form">
-            <div class="sign-border"></div>
-            <div class="sign-title">登入會員帳號</div>
-            <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
+        <div id="modal" class="hide">
+            <form id="signin-form" class="sign hide" method="PATCH">
+                <div class="sign-border"></div>
+                <div class="sign-title">登入會員帳號</div>
+                <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
 
-            <input id="signin-email" class="sign-input" type="email" placeholder="輸入電子信箱" ></input>
-            <input id="signin-pwd" class="sign-input" type="password" placeholder="輸入密碼" ></input>
-            <button class="btn sign-btn" type="submit">登入帳戶</button>
+                <input id="signin-email" class="sign-input" type="email" placeholder="輸入電子信箱" ></input>
+                <input id="signin-pwd" class="sign-input" type="password" placeholder="輸入密碼" ></input>
+                <button class="btn sign-btn" type="submit">登入帳戶</button>
 
-            <div id="signin-msg" class="text"></div>
-            <div class="text">還沒有帳戶？ <span id="open-signup">點此註冊</span></div>
-        </form>
+                <div id="signin-msg" class="text"></div>
+                <div class="text">還沒有帳戶？ <span id="open-signup">點此註冊</span></div>
+            </form>
 
-        <form class="sign hide" method="POST" id="signup-form">
-            <div class="sign-border"></div>
-            <div class="sign-title">註冊會員帳號</div>
-            <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
+            <form class="sign hide" method="POST" id="signup-form">
+                <div class="sign-border"></div>
+                <div class="sign-title">註冊會員帳號</div>
+                <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
 
-            <input id="signup-name" class="sign-input" type="text" name="name" placeholder="輸入姓名" ></input>
-            <input id="signup-email" class="sign-input" type="email" name="email" placeholder="輸入電子信箱" ></input>
-            <input id="signup-pwd" class="sign-input" type="password" name="password" placeholder="輸入密碼" ></input>
-            <button class="btn sign-btn" type="submit">註冊新帳戶</button>
+                <input id="signup-name" class="sign-input" type="text" name="name" placeholder="輸入姓名" ></input>
+                <input id="signup-email" class="sign-input" type="email" name="email" placeholder="輸入電子信箱" ></input>
+                <input id="signup-pwd" class="sign-input" type="password" name="password" placeholder="輸入密碼" ></input>
+                <button class="btn sign-btn" type="submit">註冊新帳戶</button>
 
-            <div id="signup-msg" class="text"></div>
-            <div class="text">已經有帳戶了？ <span id="open-signin">點此登入<span></div>
-        </form>
+                <div id="signup-msg" class="text"></div>
+                <div class="text">已經有帳戶了？ <span id="open-signin">點此登入<span></div>     
+            </form>
+        </div>
         
         {% block body %}
         {% endblock body %}
