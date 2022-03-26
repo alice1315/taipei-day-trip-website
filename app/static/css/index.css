@@ -96,6 +96,10 @@ body{text-align: center;}
     text-align: left;
 }
 
+.item:hover{
+    opacity: 0.5;
+}
+
 .pic{height: 160px;}
 
 .pic img{
@@ -168,7 +172,7 @@ body{text-align: center;}
     }
 
     .slogan{width: 90%}
-    input{width: 230px}
+    .search input{width: 230px}
     .icon-search{width: 60px}
     .content{
         width: 90%;

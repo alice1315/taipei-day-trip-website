@@ -9,12 +9,9 @@ var signUpMsg = document.getElementById("signup-msg");
 
 var signBtn = document.getElementById("header-sign-btn");
 var signOutBtn = document.getElementById("header-signout-btn");
-var toSignInBtn = document.getElementById("open-signin");
-var toSignUpBtn = document.getElementById("open-signup");
-var closeBtn = document.querySelectorAll(".close");
 
 async function baseInit(){
-    toggleHeaderSign();
+    isSignedIn();
     handleBtns();
     signIn();
     signUp();
@@ -32,17 +29,10 @@ async function initUserData(fetchOptions){
 
 async function isSignedIn(){
     let fetchOptions = {method: "GET"};
+
     await initUserData(fetchOptions);
 
     if (userData["data"]){
-        return true;
-    } else{
-        return false;
-    }
-}
-
-async function toggleHeaderSign(){
-    if (await isSignedIn()){
         toggleBlock(signBtn, signOutBtn);
     }
 }
@@ -71,7 +61,7 @@ function signIn(){
         showMessage(signInMsg);
 
         if (userData["ok"]){
-            location.reload();
+            location.reload(true);
         }
     }
 
@@ -113,7 +103,7 @@ function signOut(){
         await initUserData(fetchOptions);
     
         if (userData["ok"]){
-            location.reload();
+            location.reload(true);
         }
     }
 
@@ -166,6 +156,10 @@ function handleCloseBtn(){
 }
 
 function handleBtns(){   
+    let toSignInBtn = document.getElementById("open-signin");
+    let toSignUpBtn = document.getElementById("open-signup");
+    let closeBtn = document.querySelectorAll(".close");
+
     signBtn.addEventListener("click", handleSignBtn);
     toSignInBtn.addEventListener("click", handleToSignBtn);
     toSignUpBtn.addEventListener("click", handleToSignBtn);

@@ -1,24 +1,17 @@
 from flask import request
 from flask import make_response
 from flask import jsonify
-from flask import session
-
-import jwt
 
 from . import api_
 from .. import db
-from app.auth.auth import Auth
+from app.models.auth import Auth
 
 # Users
 @api_.route("/user", methods = ["GET"])
 def auth():
-    if session:
-        data = {
-            "id": session["id"],
-            "name": session["name"],
-            "email": session["email"]
-        }
-        result_dict = {"data": data}
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        result_dict = Auth.decode_auth_token(access_token)
         return jsonify(result_dict)
     else:
         result_dict = {"data": None}
@@ -45,19 +38,16 @@ def sign_in():
             return make_response(jsonify(result_dict), 400)
         else:
             if password == result["password"]:
-                session["id"] = result["id"]
-                session["name"] = result["name"]
-                session["email"] = result["email"]
-
-                r_id = result["id"],
-                r_name = result["name"],
+                r_id = result["id"]
+                r_name = result["name"]
                 r_email = result["email"]
 
                 auth_token = Auth.encode_auth_token(r_id, r_name, r_email)
                 
-                result_dict = {"ok": True, "Authorization": auth_token}
-                # result_dict = {"ok": True}
-                return jsonify(result_dict)
+                result_dict = {"ok": True}
+                response = make_response(jsonify(result_dict))
+                response.set_cookie("access_token", auth_token)
+                return response
             else:
                 result_dict = {"error": True, "message": "密碼輸入錯誤"}
                 return make_response(jsonify(result_dict), 400)
@@ -93,10 +83,12 @@ def sign_up():
 
 @api_.route("/user", methods = ["DELETE"])
 def sign_out():
-    if session:
-        session.clear()
+    access_token = request.cookies.get("access_token")
+    if access_token:
         result_dict = {"ok": True}
-        return jsonify(result_dict)
+        response = make_response(jsonify(result_dict))
+        response.set_cookie("access_token", "", expires=0)
+        return response
 
 # Attractions
 @api_.route("/attractions", methods = ["GET"])

@@ -1,5 +1,6 @@
 import jwt
 import datetime
+import base64
 
 from ..config import SECRET_KEY
 
@@ -10,8 +11,8 @@ class Auth:
     @staticmethod
     def encode_auth_token(id, name, email):
         payload = {
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30),
-            "iat": datetime.datetime.utcnow(),
+            "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=1),
+            "iat": datetime.datetime.now(datetime.timezone.utc),
             "data": {
                 "id": id,
                 "name": name,
@@ -23,13 +24,14 @@ class Auth:
     @staticmethod
     def decode_auth_token(auth_token):
         try:
-            payload = jwt.decode(auth_token, SECRET_KEY, options={"verify_exp": False})
+            payload = jwt.decode(auth_token, SECRET_KEY, algorithms=["HS256"])
 
             if ("data" in payload and "id" in payload["data"]):
                 return payload
             else:
-                raise jwt.invalidTokenError
+                raise jwt.InvalidTokenError
+
         except jwt.ExpiredSignatureError:
-            return "Token 過期"
-        except jwt.invalidTokenError:
-            return "Token 無效"
+            return {"error": True, "message": "登入已逾時"}
+        except jwt.InvalidTokenError:
+            return {"error": True, "message": "無效登入"}
