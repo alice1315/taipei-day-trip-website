@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta charset="utf-8" />
+        <title>Taipei Trip 台北一日遊</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}" />
+    </head>
+    
+    <body>
+        <div class="header">
+            <div class="container">
+                <div class="web-title" onclick="location.href = `/`;">台北一日遊</div>
+                <ul class="menu">
+                    <li>預定行程</li>
+                    <li id="header-sign-btn">登入/註冊</li>
+                    <li id="header-signout-btn" class="hide">登出系統</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="modal" class="hide">
+            <form id="signin-form" class="sign hide" method="PATCH">
+                <div class="sign-border"></div>
+                <div class="sign-title">登入會員帳號</div>
+                <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
+
+                <input id="signin-email" class="sign-input" type="email" placeholder="輸入電子信箱" ></input>
+                <input id="signin-pwd" class="sign-input" type="password" placeholder="輸入密碼" ></input>
+                <button class="btn sign-btn" type="submit">登入帳戶</button>
+
+                <div id="signin-msg" class="text"></div>
+                <div class="text">還沒有帳戶？ <span id="open-signup">點此註冊</span></div>
+            </form>
+
+            <form class="sign hide" method="POST" id="signup-form">
+                <div class="sign-border"></div>
+                <div class="sign-title">註冊會員帳號</div>
+                <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
+
+                <input id="signup-name" class="sign-input" type="text" name="name" placeholder="輸入姓名" ></input>
+                <input id="signup-email" class="sign-input" type="email" name="email" placeholder="輸入電子信箱" ></input>
+                <input id="signup-pwd" class="sign-input" type="password" name="password" placeholder="輸入密碼" ></input>
+                <button class="btn sign-btn" type="submit">註冊新帳戶</button>
+
+                <div id="signup-msg" class="text"></div>
+                <div class="text">已經有帳戶了？ <span id="open-signin">點此登入<span></div>     
+            </form>
+        </div>
+        
+        {% block body %}
+        {% endblock body %}
+        
+        <div class="footer">
+            COPYRIGHT © 2021 台北一日遊
+        </div>
+
+        <script src="{{url_for('static', filename='js/base.js')}}"></script>
+    </body>
+</html>

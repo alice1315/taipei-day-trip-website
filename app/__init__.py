@@ -15,5 +15,6 @@ def create_app():
 
     app.register_blueprint(home_blueprint)
     app.register_blueprint(api_blueprint, url_prefix="/api")
+    app.secret_key = "123456"
 
     return app

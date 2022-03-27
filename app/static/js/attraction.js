@@ -55,8 +55,8 @@ function renderPage(){
 
 function showImages(n) {
     let i;
-    let images = document.getElementsByClassName("image");
-    let dots = document.getElementsByClassName("dot");
+    let images = document.querySelectorAll(".image");
+    let dots = document.querySelectorAll(".dot");
   
     if (n > images.length){
         imageIndex = 1;

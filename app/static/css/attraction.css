@@ -1,69 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+@import 'base.css';
 
-/* base */
-
-*{box-sizing: border-box;}
-
-body{
-    margin: 0;
-    font-family: 'Noto Sans TC', sans-serif;
-    color: #666666;
-}
-
-.container{
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: none;
-    width: 1200px;
-}
-
-.title{
-    line-height: 32px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.text{
-    line-height: 24px;
-    font-size: 16px;
-}
-
-/* header */
-.header{
-    position: fixed;
-    top: 0;
-    z-index: 3;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 54px;
-    background: #FFFFFF;
-}
-
-.web-title{
-    cursor: pointer;
-    flex: none;
-    text-align: left;
-    font-size: 30px;
-    font-weight: bold;
-    color: #448899;
-}
-
-.menu{
-    display: flex;
-    justify-content: flex-end;
-    flex: none;
-}
-
-li{
-    cursor: pointer;
-    list-style: none;
-    flex: none;
-    width: 100px;
-    font-size: 16px;
+.sign{
     text-align: center;
-    color: #666666;
 }
 
 /* content */
@@ -144,7 +83,7 @@ li{
 
 .active {background-color: #000000;}
 
-  /* Fading animation */
+/* Fading animation */
 .fade {
     -webkit-animation-name: fade;
     -webkit-animation-duration: 0.8s;
@@ -185,6 +124,19 @@ li{
     display: flex;
     align-items: center;
     margin: 10px 20px 0 20px;
+}
+
+input[type="date"]{
+    width: 193px;
+    height: 35px;
+    border: none;
+    padding-left: 10px;
+    font-size: 16px;
+    color: #666666;
+}
+
+::-webkit-calendar-picker-indicator { 
+    margin-right: 10px;
 }
 
 .time {
@@ -236,37 +188,15 @@ li{
     border-radius: 50%;
   }
 
-.btn{
-    cursor: pointer;
+.order-btn{
     width: 154px;
     height: 36px;
     margin: 20px 0 0 20px;
-    background: #448899;
-    border-style: none;
-    border-radius: 5px;
-    font-size: 19px;
-    text-align: center;
-    color: #FFFFFF;
 }
 
 .block{margin-top: 50px;}
 
-
-/* footer */
-.footer{
-    width: 100%;
-    height: 104px;
-    line-height: 104px;
-    background: #757575;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: #FFFFFF;
-}
-
 @media screen and (min-width: 850px) and (max-width: 1400px){
-    .container{width: 90%;}
-
     .content{width: 90%;}
 
     #slideshow-container{
@@ -287,13 +217,6 @@ li{
 }
 
 @media screen and (max-width: 850px){
-    .container{width: 92%}
-
-    li{
-        width: 72px;
-        margin-right: 5px;
-    }
-    
     .content{width: 90%;}
 
     .spot{

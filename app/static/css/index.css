@@ -1,56 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+@import 'base.css';
 
 
-/* base */
-body{
-    margin: 0;
-    font-family: 'Noto Sans TC', sans-serif;
-    text-align: center;
-}
-
-.container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: none;
-    width: 1200px;
-}
-
-/* header */
-.header{
-    position: fixed;
-    top: 0;
-    z-index: 3;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 54px;
-    background: #FFFFFF;
-}
-
-.web-title{
-    cursor: pointer;
-    flex: none;
-    text-align: left;
-    font-size: 30px;
-    font-weight: bold;
-    color: #448899;
-}
-
-.menu{
-    display: flex;
-    justify-content: flex-end;
-    flex: none;
-}
-
-li{
-    cursor: pointer;
-    list-style: none;
-    flex: none;
-    width: 100px;
-    font-size: 16px;
-    color: #666666;
-}
+body{text-align: center;}
 
 /* welcome */
 .welcome{
@@ -86,7 +38,7 @@ li{
 
 .search{display: flex;}
 
-input{
+.search-input{
     flex: none;
     width: 400px;
     height: 46px;
@@ -96,10 +48,10 @@ input{
     font-size: 16px;
     font-weight: bold;
     color: #757575;
-    padding: 0 0 0 10px;
+    padding-left: 10px;
 }
 
-.icon-search{
+.search-btn{
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -113,7 +65,7 @@ input{
     background: #448899;
 }
 
-#icon-search-img{
+#search-img{
     width: 30px;
 	height: 30px;
 	object-fit: cover;
@@ -131,18 +83,21 @@ input{
     display: inline-flex;
     flex-wrap: wrap;
     width: 1200px;
-    margin-top: 94px;
-    margin-bottom: 150px;
+    margin: 91px auto 150px auto;
 }
 
 .item{
     cursor: pointer;
-    margin: 14px;
+    margin: 15px;
     width: 270px;
     min-height: 242px;
     border: 1px solid #E8E8E8;
     border-radius: 5px;
     text-align: left;
+}
+
+.item:hover{
+    opacity: 0.5;
 }
 
 .pic{height: 160px;}
@@ -168,20 +123,7 @@ input{
     color: #757575;
 }
 
-/* footer */
-.footer{
-    width: 100%;
-    height: 104px;
-    line-height: 104px;
-    background: #757575;
-    font-size: 16px;
-    font-weight: bold;
-    color: #FFFFFF;
-}
-
 @media screen and (min-width: 600px) and (max-width: 1400px){
-    .container{width: 90%;}
-
     #welcome-img{
         position: absolute;
         right: 50px;
@@ -210,12 +152,6 @@ input{
 }
 
 @media screen and (max-width: 600px){
-    .container{width: 92%}
-    li{
-        width: 72px;
-        margin-right: 5px;
-    }
-
     .welcome{
         height: 280px;
         overflow: hidden;
@@ -236,7 +172,7 @@ input{
     }
 
     .slogan{width: 90%}
-    input{width: 230px}
+    .search input{width: 230px}
     .icon-search{width: 60px}
     .content{
         width: 90%;

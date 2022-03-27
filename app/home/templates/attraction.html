@@ -1,24 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta charset="utf-8" />
-        <title>Taipei Trip 台北一日遊</title>
         <link rel="stylesheet" href="{{url_for('static', filename='css/attraction.css')}}" />
     </head>
-    <body onload="init();">
-        <!-- header -->
-        <div class="header">
-            <div class="container">
-                <div class="web-title" onclick="location.href = `/`;">台北一日遊</div>
-                <ul class="menu">
-                    <li><a>預定行程</a></li>
-                    <li><a>登入/註冊</a></li>
-                </ul>
-            </div>
-        </div>
 
-        <!-- content -->
+    <body onload="baseInit(); init();">
+        {% extends "base.html" %}
+
+        {% block body %}
         <div class="content">
             <div class="spot">
 
@@ -64,7 +53,7 @@
                             <div class="title">導覽費用：</div>
                             <div class="text">新台幣 <span id="price">2000</span> 元</div>
                         </div>
-                        <button class="btn">開始預定行程</button>
+                        <button class="btn order-btn">開始預定行程</button>
                     </div>
                 </div>
             </div>
@@ -82,9 +71,9 @@
                 <div id="transport" class="text"></div>
             </div>
         </div>
-
-        <div class="footer">COPYRIGHT © 2021 台北一日遊</div>
         
         <script src="{{url_for('static', filename='js/attraction.js')}}"></script>
+        {% endblock body %}
+        
     </body>
 </html>
