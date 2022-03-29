@@ -34,6 +34,9 @@ async function isSignedIn(){
 
     if (userData["data"]){
         toggleBlock(signBtn, signOutBtn);
+        return true;
+    } else{
+        return false;
     }
 }
 
@@ -42,12 +45,12 @@ function signIn(){
     async function handleSignInSubmit(event){
         event.preventDefault();
     
-        let data = {
+        let reqData = {
             "email": document.getElementById("signin-email").value,
             "password": document.getElementById("signin-pwd").value
         }
     
-        let formData = JSON.stringify(data);
+        let formData = JSON.stringify(reqData);
     
         let fetchOptions = {
             method: "PATCH",
@@ -73,13 +76,13 @@ function signUp(){
     async function handleSignUpSubmit(event){
         event.preventDefault();
     
-        let data = {
+        let reqData = {
             "name": document.getElementById("signup-name").value,
             "email": document.getElementById("signup-email").value,
             "password": document.getElementById("signup-pwd").value
         }
     
-        let formData = JSON.stringify(data);
+        let formData = JSON.stringify(reqData);
     
         let fetchOptions = {
             method: "POST",

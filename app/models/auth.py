@@ -1,6 +1,5 @@
 import jwt
 import datetime
-import base64
 
 from ..config import SECRET_KEY
 

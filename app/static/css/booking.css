@@ -1,0 +1,133 @@
+.sign{
+    text-align: center;
+}
+
+/* base */
+.content{
+    margin: 91px auto 100px auto;
+    width: 1200px;
+}
+
+.block{
+    margin: 40px auto;
+    width: 980px;
+}
+
+input{
+    margin-bottom: 15px;
+    width: 200px;
+    height: 38px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    padding-left: 15px;
+}
+
+/* attraction */
+.top{
+    margin-left: -10px;
+}
+
+.booking-title{
+    margin-bottom: 25px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.attraction{
+    position: relative;
+    display: flex;
+}
+
+.image{
+    flex: none;
+    width: 266px;
+    height: 200px;
+}
+
+.image img{
+    width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.delete{
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.info{
+    flex: none;
+    margin-top: 5px;
+    margin-left: 22px;
+}
+
+.attraction-title{
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #448899;
+}
+
+.booking-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.booking-box .text{
+    margin-left: 5px;
+}
+
+.bottom{
+    text-align: right;
+}
+
+.bottom div{
+    margin-bottom: 25px;
+}
+
+@media screen and (min-width: 750px) and (max-width: 1250px){
+    .content{width: 95%;}
+
+    .block{width: 95%}
+
+    .attraction{width: 95%;}
+
+    .delete{
+        right: -40px;
+    }
+}
+
+@media screen and (max-width: 750px){
+    .content{width: 95%;}
+
+    .block{width: 95%}
+
+    .top{margin-left: 0;}
+
+    .attraction{
+        display: block;
+        margin-bottom: 65px;
+    }
+
+    .image{
+        width: 100%;
+        height: 256px;
+    }
+
+    .info{
+        margin-left: 0;
+    }
+
+    .attraction-title{
+        margin-top: 30px;
+    }
+
+    .delete{
+        right: 0;
+        bottom: -35px;
+    }
+}

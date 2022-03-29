@@ -1,7 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
-@import 'base.css';
-
-
 body{text-align: center;}
 
 /* welcome */
@@ -139,7 +135,7 @@ body{text-align: center;}
     }
     
     .content{
-        width: 90%;
+        width: 95%;
         justify-content: center;
     }
 
@@ -171,11 +167,11 @@ body{text-align: center;}
         object-fit: cover;
     }
 
-    .slogan{width: 90%}
+    .slogan{width: 95%}
     .search input{width: 230px}
     .icon-search{width: 60px}
     .content{
-        width: 90%;
+        width: 95%;
         justify-content: center;
     }
 

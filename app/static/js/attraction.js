@@ -6,6 +6,7 @@ async function init(){
     await initData();
     renderPage();
     showImages(imageIndex);
+    makeBooking();
 }
 
 function initData (){

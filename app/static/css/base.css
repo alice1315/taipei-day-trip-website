@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
 /* base */
 *{box-sizing: border-box;}
 
@@ -26,21 +28,31 @@ body{
     font-size: 16px;
 }
 
+.bold{
+    font-weight: bold;
+}
+
 hr{
-    border-bottom: 1px solid #E8E8E8;
+    border: 1px solid #E8E8E8;
 }
 
 .btn{
     cursor: pointer;
+    height: 36px;
     background: #448899;
     border-style: none;
     border-radius: 5px;
     font-size: 19px;
     text-align: center;
+    padding: 0 20px;
     color: #FFFFFF;
 }
 
 .hide{display: none;}
+
+.error{
+    border-color: red;
+}
 
 /* header */
 .header{

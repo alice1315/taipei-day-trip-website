@@ -149,8 +149,21 @@ def show_single_attraction(attractionId):
         result_dict = {"error": True, "message": "Attraction id requested invalid"}
         return make_response(jsonify(result_dict), 400)
 
+# Booking
+# @api_.route("/booking", methods= ["GET"])
+# def show_booking():
+#     data = request.get_json()
+
+
+@api_.route("/booking", methods = ["POST"])
+def make_booking():
+    data = request.get_json()
+
+    result_dict = {"ok": True}
+    return jsonify(result_dict)
+
+
 @api_.app_errorhandler(500)
 def handle_500(err):
     result_dict = {"error": True, "message": "Internal server error"}
     return make_response(jsonify(result_dict), 500)
-    
