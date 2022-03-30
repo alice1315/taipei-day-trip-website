@@ -4,64 +4,69 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/booking.css')}}" />
     </head>
 
-    <body onload="baseInit();">
+    <body onload="baseInit(); bookingInit();">
         {% extends "base.html" %}
 
         {% block body %}
-        <div class="content">
+        <div id="content" class="content">
             <div class="block">
-                <div class="top booking-title">您好，Alice，待預訂的行程如下：</div>
-                <div class="attraction">
-                    <div class="image"><img src="{{url_for('static', filename='img/Lena.jpg')}}" /></div>
-                    <div class="info">
-                        <div class="attraction-title">台北一日遊：<span id="attraction-name">關渡、金色水岸、八里左岸自行車道</span></div>
-                        <div class="booking-box">
-                            <div class="title">日期： </div>
-                            <div id="date" class="text">2021-4-23</div>
+                <div class="top booking-title">您好，<span id="name"></span>，待預訂的行程如下：</div>
+            </div>
+            <div id="bottom">
+                <div class="block">
+                    <div class="attraction">
+                        <div class="image"><image id="image"/></div>
+                        <div class="info">
+                            <div class="attraction-title">台北一日遊：<span id="attraction-name"></span></div>
+                            <div class="booking-box">
+                                <div class="title">日期： </div>
+                                <div id="date" class="text"></div>
+                            </div>
+                            <div class="booking-box">
+                                <div class="title">時間： </div>
+                                <div id="time" class="text"></div>
+                            </div>
+                            <div class="booking-box">
+                                <div class="title">費用： </div>
+                                <div class="text">新台幣 <span id="price"></span> 元</div>
+                            </div>
+                            <div class="booking-box">
+                                <div class="title">地點： </div>
+                                <div id="address" class="text"></div>
+                            </div>
                         </div>
-                        <div class="booking-box">
-                            <div class="title">時間： </div>
-                            <div id="time" class="text">早上 9 點到下午 4 點</div>
-                        </div>
-                        <div class="booking-box">
-                            <div class="title">費用： </div>
-                            <div class="text">新台幣 <span id="price">2000</span> 元</div>
-                        </div>
-                        <div class="booking-box">
-                            <div class="title">地點： </div>
-                            <div id="address" class="text">台北市 中正區忠孝東路三段123-4號</div>
-                        </div>
+                        <a id="delete"><img src="{{url_for('static', filename='img/icon_delete.png')}}"/></a>
                     </div>
-                    <a class="delete"><img src="{{url_for('static', filename='img/icon_delete.png')}}"/></a>
+                </div>
+    
+                <hr/>
+    
+                <form class="block">
+                    <div class="booking-title">您的聯絡資訊</div>
+                    <div class="text">聯絡姓名： <input type="text" /></div>
+                    <div class="text">聯絡信箱： <input type="email"/></div>
+                    <div class="text">手機號碼： <input type="text"/></div>
+                    <div class="text bold">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+                </form>
+    
+                <hr/>
+    
+                <form class="block">
+                    <div class="booking-title">信用卡付款資訊</div>
+                    <div class="text">卡片號碼： <input type="text" placeholder="**** **** ****"/></div>
+                    <div class="text">過期時間： <input type="text" placeholder="MM/YY"/></div>
+                    <div class="text">驗證密碼： <input type="text" placeholder="CVV"/></div>
+                </form>
+    
+                <hr/>
+    
+                <div class="block bottom">
+                    <div class="title">總價：新台幣 <span id="total-price"></span> 元</div>
+                    <button class="btn">確認訂購並付款</button>
                 </div>
             </div>
-
-            <hr/>
-
-            <form class="block">
-                <div class="booking-title">您的聯絡資訊</div>
-                <div class="text">聯絡姓名： <input type="text" /></div>
-                <div class="text">聯絡信箱： <input type="email"/></div>
-                <div class="text">手機號碼： <input type="text"/></div>
-                <div class="text bold">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
-            </form>
-
-            <hr/>
-
-            <form class="block">
-                <div class="booking-title">信用卡付款資訊</div>
-                <div class="text">卡片號碼： <input type="text" placeholder="**** **** ****"/></div>
-                <div class="text">過期時間： <input type="text" placeholder="MM/YY"/></div>
-                <div class="text">驗證密碼： <input type="text" placeholder="CVV"/></div>
-            </form>
-
-            <hr/>
-
-            <div class="block bottom">
-                <div class="title">總價：新台幣 <span id="total-price">2000</span> 元</div>
-                <button class="btn">確認訂購並付款</button>
-            </div>
         </div>
+            
 
         <script src="{{url_for('static', filename='js/booking.js')}}"></script>
         {% endblock body %}

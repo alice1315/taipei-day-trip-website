@@ -50,7 +50,7 @@ input{
 	object-fit: cover;
 }
 
-.delete{
+#delete{
     cursor: pointer;
     position: absolute;
     right: 0;
@@ -106,7 +106,7 @@ input{
 
     .block{width: 95%}
 
-    .top{margin-left: 0;}
+    .top{margin-left: 0px;}
 
     .attraction{
         display: block;

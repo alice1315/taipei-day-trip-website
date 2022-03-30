@@ -88,6 +88,19 @@ TABLES['member'] = (
     "  PRIMARY KEY (`id`),"
     "  UNIQUE (`email`))")
 
+TABLES['shopping_cart'] = (
+    "CREATE TABLE `shopping_cart` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `user_id` bigint NOT NULL,"
+    "  `attraction_id` bigint NOT NULL,"
+    "  `date` date NOT NULL,"
+    "  `time` varchar(10) NOT NULL,"
+    "  `price` int NOT NULL,"
+    "  PRIMARY KEY (`id`),"
+    "  UNIQUE (`user_id`),"
+    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`),"
+    "  FOREIGN KEY (`attraction_id`) REFERENCES spots(`id`))")
+
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:

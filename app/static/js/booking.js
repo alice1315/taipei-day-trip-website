@@ -2,6 +2,12 @@ var bookingUrl = "/api/booking";
 
 var bookingData;
 
+async function bookingInit(){
+    await initBookingData({method: "GET"});
+    renderBookingPage();
+    deleteBooking();
+}
+
 async function initBookingData(fetchOptions){
     await fetch(bookingUrl, fetchOptions)
     .then((resp) => {
@@ -13,7 +19,7 @@ async function initBookingData(fetchOptions){
 
 function makeBooking(){
     async function handleMakeBooking(){
-        if (userData["data"]){
+        if (isSignedIn()){
             let date = document.getElementById("date").value;
 
             if (date != ""){
@@ -38,7 +44,7 @@ function makeBooking(){
                 window.location.href = "/booking";
 
             } else{
-                document.getElementById("date").style.border = "1px solid red";
+                document.getElementById("date").style.border = "2px solid #CF4B49";
             }
         } else{
             handleSignBtn();
@@ -46,6 +52,50 @@ function makeBooking(){
     }
 
     let btn = document.getElementById("booking-btn");
-
     btn.addEventListener("click", handleMakeBooking);
+}
+
+function deleteBooking(){
+    async function handleDeleteBooking(){
+        await initBookingData({method: "DELETE"});
+        location.reload(true);
+    }
+
+    let btn = document.getElementById("delete");
+    btn.addEventListener("click", handleDeleteBooking);
+}
+
+function renderBookingPage(){
+    if (isSignedIn()){
+        let name = document.getElementById("name");
+        name.innerText = userData["data"]["name"];
+
+        if (bookingData["data"]){
+            let data = bookingData["data"];
+
+            let img = document.getElementById("image");
+            let attractionName = document.getElementById("attraction-name");
+            let date = document.getElementById("date");
+            let time = document.getElementById("time");
+            let price = document.getElementById("price");
+            let address = document.getElementById("address");
+            let totalPrice = document.getElementById("total-price");
+            
+            img.src = data["attraction"]["image"];
+            attractionName.innerText = data["attraction"]["name"];
+            date.innerText = data["date"];
+            time.innerText = data["time"];
+            price.innerText = data["price"];
+            address.innerText = data["attraction"]["address"];
+            totalPrice.innerText = data["price"];
+        } else{
+            document.getElementById("bottom").classList.add("hide");
+            let msg = document.createElement("div");
+            msg.setAttribute("class", "block");
+            document.getElementById("content").appendChild(msg);
+            msg.innerText = "目前沒有任何待預定的行程";
+        }
+    } else{
+        window.location.href = "/";
+    }
 }

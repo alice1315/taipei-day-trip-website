@@ -6,6 +6,10 @@ from . import api_
 from .. import db
 from app.models.auth import Auth
 
+global booking_data
+booking_data = None
+
+
 # Users
 @api_.route("/user", methods = ["GET"])
 def auth():
@@ -90,6 +94,7 @@ def sign_out():
         response.set_cookie("access_token", "", expires=0)
         return response
 
+
 # Attractions
 @api_.route("/attractions", methods = ["GET"])
 def show_attractions():
@@ -132,7 +137,6 @@ def show_attractions():
     else:
         result_dict = {"error": True, "message": "Page requested invalid"}
         return make_response(jsonify(result_dict), 400)
-        
 
 @api_.route("/attraction/<attractionId>", methods = ["GET"])
 def show_single_attraction(attractionId):
@@ -149,19 +153,75 @@ def show_single_attraction(attractionId):
         result_dict = {"error": True, "message": "Attraction id requested invalid"}
         return make_response(jsonify(result_dict), 400)
 
-# Booking
-# @api_.route("/booking", methods= ["GET"])
-# def show_booking():
-#     data = request.get_json()
 
+# Booking
+@api_.route("/booking", methods= ["GET"])
+def get_booking():
+    access_token = request.cookies.get("access_token")
+    user_id = Auth.decode_auth_token(access_token)["data"]["id"]
+
+    sql = ("SELECT s.id, s.name, s.address, s.images, c.date, c.time, c.price FROM spots s, shopping_cart c WHERE c.user_id=%s and c.attraction_id=s.id")
+    sql_data = (user_id, )
+
+    result = db.execute_sql(sql, sql_data, "one")
+
+    if result:
+        result["image"] = result["images"].split(",")[0]
+        result.pop("images")
+
+        result_dict = {
+            "data": {
+                "attraction":{
+                    "id": result["id"],
+                    "name": result["name"],
+                    "address": result["address"],
+                    "image": result["image"]
+                },
+            "date": result["date"],
+            "time": result["time"],
+            "price": result["price"]
+            }
+        }
+        return jsonify(result_dict)
+
+    else:
+        result_dict = {"data": None}
+        return jsonify(result_dict)
 
 @api_.route("/booking", methods = ["POST"])
 def make_booking():
+    access_token = request.cookies.get("access_token")
+    user_id = Auth.decode_auth_token(access_token)["data"]["id"]
+
     data = request.get_json()
+    attraction_id = data["attractionId"]
+    date = data["date"]
+    time = data["time"]
+    price = data["price"]
+
+    sql = ("INSERT INTO shopping_cart (user_id, attraction_id, date, time, price) VALUES (%s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE attraction_id=%s, date=%s, time=%s, price=%s")
+    sql_data = (user_id, attraction_id, date, time, price, attraction_id, date, time, price)
+
+    db.execute_sql(sql, sql_data, "one")
+    db.cnx.commit()
 
     result_dict = {"ok": True}
     return jsonify(result_dict)
 
+@api_.route("/booking", methods = ["DELETE"])
+def delete_booking():
+    access_token = request.cookies.get("access_token")
+    user_id = Auth.decode_auth_token(access_token)["data"]["id"]
+
+    sql = ("DELETE FROM shopping_cart WHERE user_id=%s")
+    sql_data = (user_id, )
+
+    db.execute_sql(sql, sql_data, "one")
+    db.cnx.commit()
+
+    result_dict = {"ok": True}
+    return jsonify(result_dict)
+    
 
 @api_.app_errorhandler(500)
 def handle_500(err):
