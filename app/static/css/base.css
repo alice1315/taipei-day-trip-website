@@ -3,7 +3,10 @@
 /* base */
 *{box-sizing: border-box;}
 
+html{height: 100%;}
+
 body{
+    height: 100%;
     margin: 0;
     font-family: 'Noto Sans TC', sans-serif;
     color: #666666;
@@ -49,10 +52,6 @@ hr{
 }
 
 .hide{display: none;}
-
-.error{
-    border-color: red;
-}
 
 /* header */
 .header{
@@ -175,7 +174,7 @@ li{
 
 #signin-msg, #signup-msg{
     margin-bottom: 10px;
-    color: red;
+    color: #CF4B49;
 }
 
 #open-signup, #open-signin{
@@ -189,6 +188,7 @@ li{
     height: 104px;
     line-height: 104px;
     background: #757575;
+    box-shadow: 0 100vh 0 100vh #757575;
     font-size: 16px;
     font-weight: bold;
     text-align: center;

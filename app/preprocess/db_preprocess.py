@@ -1,6 +1,4 @@
 import os
-import json
-import re
 
 from dotenv import load_dotenv
 
@@ -90,14 +88,12 @@ TABLES['member'] = (
 
 TABLES['shopping_cart'] = (
     "CREATE TABLE `shopping_cart` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
     "  `user_id` bigint NOT NULL,"
     "  `attraction_id` bigint NOT NULL,"
     "  `date` date NOT NULL,"
-    "  `time` varchar(10) NOT NULL,"
+    "  `time` varchar(30) NOT NULL,"
     "  `price` int NOT NULL,"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`user_id`),"
+    "  PRIMARY KEY (`user_id`),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`),"
     "  FOREIGN KEY (`attraction_id`) REFERENCES spots(`id`))")
 

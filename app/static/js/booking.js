@@ -1,5 +1,4 @@
 var bookingUrl = "/api/booking";
-
 var bookingData;
 
 async function bookingInit(){
@@ -41,10 +40,14 @@ function makeBooking(){
                 }
 
                 await initBookingData(fetchOptions);
-                window.location.href = "/booking";
+                if (bookingData["ok"]){
+                    window.location.href = "/booking";
+                } else{
+                    showDateMessage(bookingData["message"]);
+                }
 
             } else{
-                document.getElementById("date").style.border = "2px solid #CF4B49";
+                showDateMessage("請選擇日期");
             }
         } else{
             handleSignBtn();
@@ -53,16 +56,6 @@ function makeBooking(){
 
     let btn = document.getElementById("booking-btn");
     btn.addEventListener("click", handleMakeBooking);
-}
-
-function deleteBooking(){
-    async function handleDeleteBooking(){
-        await initBookingData({method: "DELETE"});
-        location.reload(true);
-    }
-
-    let btn = document.getElementById("delete");
-    btn.addEventListener("click", handleDeleteBooking);
 }
 
 function renderBookingPage(){
@@ -89,13 +82,27 @@ function renderBookingPage(){
             address.innerText = data["attraction"]["address"];
             totalPrice.innerText = data["price"];
         } else{
-            document.getElementById("bottom").classList.add("hide");
-            let msg = document.createElement("div");
-            msg.setAttribute("class", "block");
-            document.getElementById("content").appendChild(msg);
-            msg.innerText = "目前沒有任何待預定的行程";
+            document.getElementById("booking").classList.add("hide");
+            document.getElementById("booking-msg").innerText = "目前沒有任何待預定的行程";
         }
     } else{
         window.location.href = "/";
     }
+}
+
+function deleteBooking(){
+    async function handleDeleteBooking(){
+        await initBookingData({method: "DELETE"});
+        if (bookingData["ok"]){
+            location.reload(true);
+        }
+    }
+
+    let btn = document.getElementById("delete");
+    btn.addEventListener("click", handleDeleteBooking);
+}
+
+function showDateMessage(msg){
+    document.getElementById("date").style.border = "2px solid #CF4B49";
+    document.getElementById("date-msg").innerText = msg;
 }

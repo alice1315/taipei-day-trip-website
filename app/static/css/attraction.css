@@ -111,7 +111,7 @@
 /* order */
 .order{
     width: 600px;
-    height: 302px;
+    min-height: 302px;
     background: #E8E8E8;
     border-radius: 5px;
     padding: 3px;
@@ -186,7 +186,12 @@
   }
 
 .order-btn{
-    margin: 20px 0 0 20px;
+    margin: 20px 0 10px 20px;
+}
+
+#date-msg{
+    margin: 5px 0 0 105px;
+    color: #CF4B49;
 }
 
 .block{margin-top: 50px;}

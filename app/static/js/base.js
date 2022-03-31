@@ -64,7 +64,7 @@ function signIn(){
         }
     
         await initUserData(fetchOptions);
-        showMessage(signInMsg);
+        showUserMessage(signInMsg);
 
         if (userData["ok"]){
             location.reload(true);
@@ -96,7 +96,7 @@ function signUp(){
         };
     
         await initUserData(fetchOptions);
-        showMessage(signUpMsg);
+        showUserMessage(signUpMsg);
     }
 
     signUpForm.addEventListener("submit", handleSignUpSubmit);
@@ -116,8 +116,8 @@ function signOut(){
     signOutBtn.addEventListener("click", handleSignOutSubmit);
 }
 
-// Message
-function showMessage(target){
+// User Message
+function showUserMessage(target){
     if (!userData){
         target.innerText = "";
     }else if (userData["error"]){
@@ -150,7 +150,7 @@ function handleSignBtn(){
 
 function handleBookingBtn(){
     if (isSignedIn()){
-        window.location.href = "/booking";
+        location.href = "/booking";
     } else{
         handleSignBtn();
     }

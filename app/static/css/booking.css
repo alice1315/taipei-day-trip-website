@@ -77,6 +77,11 @@ input{
     margin-bottom: 2px;
 }
 
+.booking-box .title{
+    flex: none;
+    width: 48px;
+}
+
 .booking-box .text{
     margin-left: 5px;
 }
