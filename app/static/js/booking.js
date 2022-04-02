@@ -60,6 +60,7 @@ function makeBooking(){
 
 function renderBookingPage(){
     if (isSignedIn()){
+        document.getElementById("top").classList.remove("hide");
         let name = document.getElementById("name");
         name.innerText = userData["data"]["name"];
 
