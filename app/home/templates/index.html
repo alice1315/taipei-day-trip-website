@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" />
     </head>
 
-    <body onload="baseInit(); init();">
+    <body onload="baseInit(); indexInit();">
         {% extends "base.html" %}
 
         {% block body %}
@@ -23,6 +23,8 @@
         </div>
 
         <div id="content" class="content"></div>
+
+        <div id="loading" class="lds-ring hide"><div></div><div></div><div></div><div></div></div>
         
         <div class="observer"></div>
 

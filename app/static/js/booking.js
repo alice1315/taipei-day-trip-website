@@ -23,7 +23,7 @@ function makeBooking(){
 
             if (date != ""){
                 let reqData = {
-                    "attractionId": data["data"]["id"],
+                    "attractionId": attractionData["data"]["id"],
                     "date": date,
                     "time": document.querySelector("input[name='time']:checked").value,
                     "price": document.getElementById("price").textContent
@@ -64,6 +64,7 @@ function renderBookingPage(){
         name.innerText = userData["data"]["name"];
 
         if (bookingData["data"]){
+            document.getElementById("booking").classList.remove("hide");
             let data = bookingData["data"];
 
             let img = document.getElementById("image");
@@ -82,7 +83,6 @@ function renderBookingPage(){
             address.innerText = data["attraction"]["address"];
             totalPrice.innerText = data["price"];
         } else{
-            document.getElementById("booking").classList.add("hide");
             document.getElementById("booking-msg").innerText = "目前沒有任何待預定的行程";
         }
     } else{

@@ -118,7 +118,7 @@ def show_attractions():
         for result in results:
             result["images"] = result["images"].split(",")
 
-        # Check next page if exists
+        # Check if next page exists
         count = db.execute_sql(count_sql, count_sql_data, "one")
         
         if count:

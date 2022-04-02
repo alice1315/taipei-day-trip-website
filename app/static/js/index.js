@@ -1,33 +1,31 @@
-var page;
-var nextPage;
-
+var count;
 var keywordUrl = ``;
-var reqUrl;
-var data;
+var indexData;
 
 var loadingObserver;
 var observer;
+var loadingGif = document.getElementById("loading");
 
-async function init (){
-    page = 0;
-    await initData();
-    renderPage();
+async function indexInit (){
+    await initIndexData(0);
+    renderIndexPage();
     infiniteScroll();
 }
 
-function initData (){
-    reqUrl = `/api/attractions?page=${page}${keywordUrl}`
+async function initIndexData (page){
+    let indexUrl = `/api/attractions?page=` + page + keywordUrl;
+    count = page;
 
-    return fetch(reqUrl)
+    await fetch(indexUrl)
     .then((resp) => {
         return resp.json();
     }).then((result) => {
-        data = result;
+        indexData = result;
     });
 }
 
-function renderPage (){
-    let spots = data["data"];
+function renderIndexPage (){
+    let spots = indexData["data"];
 
     if(spots.length > 0){
         for (let i = 0; i < spots.length; i++){
@@ -71,7 +69,6 @@ function renderPage (){
 
 async function searchKeyword (){
     observer.unobserve(loadingObserver);
-    page = 0;
 
     let keyword = document.getElementById("search-word").value;
     if (keyword != ``){
@@ -80,11 +77,10 @@ async function searchKeyword (){
         keywordUrl = ``;
     };
 
-    let content = document.getElementById("content");
-    content.innerHTML = ``;
+    document.getElementById("content").innerHTML = ``;
 
-    await initData();
-    renderPage();
+    await initIndexData(0);
+    renderIndexPage();
     infiniteScroll();
 }
 
@@ -92,12 +88,13 @@ function infiniteScroll (){
     loadingObserver = document.querySelector(".observer");
     
     async function loadNextPage (){
-        nextPage = data["nextPage"];
-        if (nextPage != null && nextPage != page){
-            page = nextPage;
-            await initData();
-            renderPage();
+        let nextPage = indexData["nextPage"];
+        if (nextPage != null && nextPage != count){
+            await initIndexData(nextPage);
+            renderIndexPage();
+            loadingGif.classList.add("hide");
         } else if (nextPage == null){
+            loadingGif.classList.add("hide");
             observer.unobserve(loadingObserver);
         } else {
 
@@ -106,6 +103,7 @@ function infiniteScroll (){
     
     function callback ([entry]){
         if (entry && entry.isIntersecting){
+            loadingGif.classList.remove("hide");
             checkImgOnLoad(function(){
                 loadNextPage();
             });

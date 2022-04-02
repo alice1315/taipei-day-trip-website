@@ -138,7 +138,7 @@ function hideBlock(...targets){
     targets.forEach(target => target.classList.add("hide"))
 }
 
-function resetForm(targetForm, targetMsg){
+function resetForm(targetForm, targetMsg, targetInputs){
     targetForm.reset();
     targetMsg.innerText = "";
 }
@@ -179,5 +179,5 @@ function handleBtns(){
     bookingBtn.addEventListener("click", handleBookingBtn);
     toSignInBtn.addEventListener("click", handleToSignBtn);
     toSignUpBtn.addEventListener("click", handleToSignBtn);
-    closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn))
+    closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn));
 }
