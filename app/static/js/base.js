@@ -11,7 +11,7 @@ var signBtn = document.getElementById("header-sign-btn");
 var signOutBtn = document.getElementById("header-signout-btn");
 
 async function baseInit(){
-    isSignedIn();
+    checkSignedIn();
     handleBtns();
     signIn();
     signUp();
@@ -27,13 +27,19 @@ async function initUserData(fetchOptions){
     })
 }
 
-async function isSignedIn(){
+async function checkSignedIn(){
     let fetchOptions = {method: "GET"};
-
     await initUserData(fetchOptions);
-
-    if (userData["data"]){
+    if(isSignedIn()){
         toggleBlock(signBtn, signOutBtn);
+    }
+}
+
+function isSignedIn(){
+    if (userData["data"]){
+        return true;
+    } else{
+        return false;
     }
 }
 
@@ -42,12 +48,12 @@ function signIn(){
     async function handleSignInSubmit(event){
         event.preventDefault();
     
-        let data = {
+        let reqData = {
             "email": document.getElementById("signin-email").value,
             "password": document.getElementById("signin-pwd").value
         }
     
-        let formData = JSON.stringify(data);
+        let formData = JSON.stringify(reqData);
     
         let fetchOptions = {
             method: "PATCH",
@@ -58,7 +64,7 @@ function signIn(){
         }
     
         await initUserData(fetchOptions);
-        showMessage(signInMsg);
+        showUserMessage(signInMsg);
 
         if (userData["ok"]){
             location.reload(true);
@@ -73,13 +79,13 @@ function signUp(){
     async function handleSignUpSubmit(event){
         event.preventDefault();
     
-        let data = {
+        let reqData = {
             "name": document.getElementById("signup-name").value,
             "email": document.getElementById("signup-email").value,
             "password": document.getElementById("signup-pwd").value
         }
     
-        let formData = JSON.stringify(data);
+        let formData = JSON.stringify(reqData);
     
         let fetchOptions = {
             method: "POST",
@@ -90,7 +96,7 @@ function signUp(){
         };
     
         await initUserData(fetchOptions);
-        showMessage(signUpMsg);
+        showUserMessage(signUpMsg);
     }
 
     signUpForm.addEventListener("submit", handleSignUpSubmit);
@@ -110,8 +116,8 @@ function signOut(){
     signOutBtn.addEventListener("click", handleSignOutSubmit);
 }
 
-// Message
-function showMessage(target){
+// User Message
+function showUserMessage(target){
     if (!userData){
         target.innerText = "";
     }else if (userData["error"]){
@@ -132,7 +138,7 @@ function hideBlock(...targets){
     targets.forEach(target => target.classList.add("hide"))
 }
 
-function resetForm(targetForm, targetMsg){
+function resetForm(targetForm, targetMsg, targetInputs){
     targetForm.reset();
     targetMsg.innerText = "";
 }
@@ -140,6 +146,14 @@ function resetForm(targetForm, targetMsg){
 function handleSignBtn(){
     toggleBlock(modal, signInForm);
     signInForm.classList.add("slidein");
+}
+
+function handleBookingBtn(){
+    if (isSignedIn()){
+        location.href = "/booking";
+    } else{
+        handleSignBtn();
+    }
 }
 
 function handleToSignBtn(){
@@ -156,12 +170,14 @@ function handleCloseBtn(){
 }
 
 function handleBtns(){   
+    let bookingBtn = document.getElementById("header-booking-btn");
     let toSignInBtn = document.getElementById("open-signin");
     let toSignUpBtn = document.getElementById("open-signup");
     let closeBtn = document.querySelectorAll(".close");
 
     signBtn.addEventListener("click", handleSignBtn);
+    bookingBtn.addEventListener("click", handleBookingBtn);
     toSignInBtn.addEventListener("click", handleToSignBtn);
     toSignUpBtn.addEventListener("click", handleToSignBtn);
-    closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn))
+    closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn));
 }

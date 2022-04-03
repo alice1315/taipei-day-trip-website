@@ -1,24 +1,25 @@
-var reqUrl = `/api` + window.location["pathname"];
-var data;
+var attractionUrl = `/api` + window.location["pathname"];
+var attractionData;
 var imageIndex = 1;
 
-async function init(){
-    await initData();
-    renderPage();
+async function attractionInit(){
+    await initAttractionData();
+    renderAttractionPage();
     showImages(imageIndex);
+    makeBooking();
 }
 
-function initData (){
-    return fetch(reqUrl)
+async function initAttractionData (){
+    await fetch(attractionUrl, {method: "GET"})
     .then((resp) => {
         return resp.json();
     }).then((result) => {
-        data = result;
+        attractionData = result;
     });
 }
 
-function renderPage(){
-    let spot = data["data"];
+function renderAttractionPage(){
+    let spot = attractionData["data"];
 
     for (let i = 0; i < spot["images"].length; i++){
         let imgItem = document.createElement("div");
