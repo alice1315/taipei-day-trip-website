@@ -5,6 +5,8 @@ async function bookingInit(){
     await initBookingData({method: "GET"});
     renderBookingPage();
     deleteBooking();
+    tappaySetUp();
+    makePaying();
 }
 
 async function initBookingData(fetchOptions){

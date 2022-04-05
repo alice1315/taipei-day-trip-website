@@ -13,15 +13,6 @@
     width: 980px;
 }
 
-input{
-    margin-bottom: 15px;
-    width: 200px;
-    height: 38px;
-    border: 1px solid #E8E8E8;
-    border-radius: 5px;
-    padding-left: 15px;
-}
-
 /* attraction */
 #top{
     margin-left: -10px;
@@ -92,6 +83,28 @@ input{
 
 .bottom div{
     margin-bottom: 25px;
+}
+
+/* Input/TPField */
+input, .tpfield{
+    margin-left: 5px;
+    width: 200px;
+    height: 38px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    padding-left: 15px;
+    color: #666666;
+}
+
+.input-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tappay-field-focus {
+    border: 2px solid #7A7D9B;
+    outline: 0;
 }
 
 @media screen and (min-width: 750px) and (max-width: 1250px){
