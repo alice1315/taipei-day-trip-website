@@ -11,3 +11,6 @@ MYSQL_CONFIG = {
     'host': '127.0.0.1',
     'database': 'taipei_attractions'
 }
+
+APP_ID = 124039
+APP_KEY = "app_RMLknzGTJatrHEEvYsMcWbFpiYvoiWlBqN4KQw3TLcp2Pd9g5164wJOrlsXr"

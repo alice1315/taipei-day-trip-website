@@ -97,6 +97,30 @@ TABLES['shopping_cart'] = (
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`),"
     "  FOREIGN KEY (`attraction_id`) REFERENCES spots(`id`))")
 
+"""
+TABLES['order'] = (
+    "CREATE TABLE `order` ("
+    "  `user_id` bigint NOT NULL,"
+    "  `attraction_id` bigint NOT NULL,"
+    "  `date` date NOT NULL,"
+    "  `time` varchar(30) NOT NULL,"
+    "  `price` int NOT NULL,"
+    "  PRIMARY KEY (`user_id`),"
+    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`),"
+    "  FOREIGN KEY (`attraction_id`) REFERENCES spots(`id`))")
+
+TABLES['payment'] = (
+    "CREATE TABLE `payment` ("
+    "  `user_id` bigint NOT NULL,"
+    "  `attraction_id` bigint NOT NULL,"
+    "  `date` date NOT NULL,"
+    "  `time` varchar(30) NOT NULL,"
+    "  `price` int NOT NULL,"
+    "  PRIMARY KEY (`user_id`),"
+    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`),"
+    "  FOREIGN KEY (`attraction_id`) REFERENCES spots(`id`))")
+"""
+
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:
@@ -109,6 +133,7 @@ for table_name in TABLES:
             print(err.msg)
     else:
         print("OK")
+
 
 """
 # Inserting datas

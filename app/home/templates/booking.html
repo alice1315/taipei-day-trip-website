@@ -48,15 +48,18 @@
                     <div class="booking-title">您的聯絡資訊</div>
                     <div class="input-box">
                         <div class="text">聯絡姓名： </div>
-                        <input type="text" />
+                        <input id="contact-name" type="text" />
+                        <div id="name-msg" class="order-msg"></div>
                     </div>
                     <div class="input-box">
                         <div class="text">聯絡信箱： </div>
-                        <input type="email"/>
+                        <input id="contact-email" type="email"/>
+                        <div id="email-msg" class="order-msg"></div>
                     </div>
                     <div class="input-box">
                         <div class="text">手機號碼： </div>
-                        <input type="text"/>
+                        <input id="contact-phone" type="text"/>
+                        <div id="phone-msg" class="order-msg"></div>
                     </div>
                     
                     <div class="text bold">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
@@ -69,14 +72,17 @@
                     <div class="input-box">
                         <div class="text">卡片號碼： </div>
                         <div id="card-number" class="tpfield"></div>
+                        <div id="number-msg" class="order-msg"></div>
                     </div>
                     <div class="input-box">
                         <div class="text">過期時間： </div>
                         <div id="card-expiration-date" class="tpfield"></div>
+                        <div id="expiry-msg" class="order-msg"></div>
                     </div>
                     <div class="input-box">
                         <div class="text">驗證密碼： </div>
                         <div id="card-ccv" class="tpfield"></div>
+                        <div id="ccv-msg" class="order-msg"></div>
                     </div>
                 </form>
     
@@ -85,6 +91,7 @@
                 <div class="block bottom">
                     <div class="title">總價：新台幣 <span id="total-price"></span> 元</div>
                     <button id="booking-btn" class="btn">確認訂購並付款</button>
+                    <div id="order-msg"></div>
                 </div>
             </div>
             <div id="booking-msg" class="block"></div>
@@ -93,7 +100,7 @@
 
         <script src="{{url_for('static', filename='js/booking.js')}}"></script>
         <script src="https://js.tappaysdk.com/tpdirect/v5.8.0"></script>
-        <script src="{{url_for('static', filename='js/tpdirect.js')}}"></script>
+        <script src="{{url_for('static', filename='js/order.js')}}"></script>
         {% endblock body %}
 
     </body>

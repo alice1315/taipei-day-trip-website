@@ -107,6 +107,16 @@ input, .tpfield{
     outline: 0;
 }
 
+.order-msg{
+    margin-left: 10px;
+    color: #CF4B49;
+}
+
+#order-msg{
+    margin-top: 10px;
+    color: #CF4B49;
+}
+
 @media screen and (min-width: 750px) and (max-width: 1250px){
     .content{width: 95%;}
 
