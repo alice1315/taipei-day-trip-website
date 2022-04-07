@@ -91,7 +91,7 @@ async function postOrderData(prime){
     let reqData = {
         "prime": prime,
         "order": {
-            "price": document.getElementById("total-price").value,
+            "price": document.getElementById("price").textContent,
             "trip": {
                 "attraction": bookingData["data"]["attraction"],
                 "date": bookingData["data"]["date"],

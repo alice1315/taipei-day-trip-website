@@ -51,58 +51,10 @@ except mysql.connector.Error as err:
 
 # Creating tables
 TABLES = {}
-TABLES['spots'] = (
-    "CREATE TABLE `spots` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `name` varchar(50) NOT NULL,"
-    "  `category` varchar(50),"
-    "  `description` varchar(2000),"
-    "  `address` varchar(50),"
-    "  `transport` varchar(500),"
-    "  `mrt` varchar(50),"
-    "  `latitude` float(10, 7),"
-    "  `longitude` float(10, 7),"
-    "  `open_time` varchar(2000),"
-    "  `source` varchar(50),"
-    "  `images` varchar(3000),"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`name`))")
-
-TABLES['images'] = (
-    "CREATE TABLE `images` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `name` varchar(50) NOT NULL,"
-    "  `image_url` varchar(255) NOT NULL,"
-    "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`name`) REFERENCES spots(`name`))")
-
-TABLES['member'] = (
-    "CREATE TABLE `member` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `name` varchar(255) NOT NULL,"
-    "  `email` varchar(255) NOT NULL,"
-    "  `password` varchar(255) NOT NULL,"
-    "  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`email`))")
-
-TABLES['shopping_cart'] = (
-    "CREATE TABLE `shopping_cart` ("
-    "  `user_id` bigint NOT NULL,"
-    "  `attraction_id` bigint NOT NULL,"
-    "  `attraction_name` varchar(50) NOT NULL,"
-    "  `attraction_address` varchar(50),"
-    "  `attraction_images` varchar(3000),"
-    "  `date` date NOT NULL,"
-    "  `time` varchar(30) NOT NULL,"
-    "  `price` int NOT NULL,"
-    "  PRIMARY KEY (`user_id`),"
-    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
-
+"""
 TABLES['orders'] = (
     "CREATE TABLE `orders` ("
-    "  `number` bigint NOT NULL AUTO_INCREMENT,"
-    "  `user_id` bigint NOT NULL,"
+    "  `number` bigint NOT NULL,"
     "  `contact_name` varchar(50) NOT NULL,"
     "  `contact_email` varchar(255) NOT NULL,"
     "  `contact_phone` varchar(50) NOT NULL,"
@@ -116,18 +68,14 @@ TABLES['orders'] = (
     "  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`number`),"
-    "  UNIQUE (`number`),"
-    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
+    "  UNIQUE (`number`))")   
+"""
 
-TABLES['payment'] = (
-    "CREATE TABLE `payment` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `number` bigint NOT NULL,"
-    "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
-    "  `status` varchar(5) NOT NULL,"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`number`),"
-    "  FOREIGN KEY (`number`) REFERENCES orders(`number`))")         
+TABLES['table1_seq'] = (
+    "CREATE TABLE `table1_seq`(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY)") 
+
+TABLES['table1'] = (
+    "CREATE TABLE table1(id VARCHAR(7) NOT NULL PRIMARY KEY DEFAULT '0', name VARCHAR(30), time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP)")  
 
 for table_name in TABLES:
     table_description = TABLES[table_name]
@@ -141,6 +89,10 @@ for table_name in TABLES:
             print(err.msg)
     else:
         print("OK")
+
+sql = ("CREATE TRIGGER tg_table1_insert BEFORE INSERT ON table1 FOR EACH ROW BEGIN INSERT INTO table1_seq() VALUES (); SET NEW.id = CONCAT(datetime, LPAD(LAST_INSERT_ID(), 3, '0')); END")
+
+cursor.execute(sql)
 
 
 """

@@ -15,21 +15,21 @@ def get_booking():
     if access_token:
         user_id = Auth.decode_auth_token(access_token)["data"]["id"]
 
-        sql = ("SELECT s.id, s.name, s.address, s.images, c.date, c.time, c.price FROM spots s, shopping_cart c WHERE c.user_id=%s and c.attraction_id=s.id")
+        sql = ("SELECT attraction_id, attraction_name, attraction_address, attraction_images, date, time, price FROM shopping_cart WHERE user_id=%s")
         sql_data = (user_id, )
 
         result = db.execute_sql(sql, sql_data, "one")
 
         if result:
-            result["image"] = result["images"].split(",")[0]
-            result.pop("images")
+            result["image"] = result["attraction_images"].split(",")[0]
+            result.pop("attraction_images")
 
             result_dict = {
                 "data": {
                     "attraction":{
-                        "id": result["id"],
-                        "name": result["name"],
-                        "address": result["address"],
+                        "id": result["attraction_id"],
+                        "name": result["attraction_name"],
+                        "address": result["attraction_address"],
                         "image": result["image"]
                     },
                 "date": datetime.strftime(result["date"], "%Y-%m-%d"),
@@ -56,11 +56,19 @@ def make_booking():
         date = datetime.strptime(data["date"], "%Y-%m-%d")
         if date > datetime.now():
             attraction_id = data["attractionId"]
+
+            sql = ("SELECT name, address, images FROM spots WHERE id=%s")
+            sql_data = (attraction_id,)
+            result = db.execute_sql(sql, sql_data, "one")
+
+            attraction_name = result["name"]
+            attraction_address = result["address"]
+            attraction_images = result["images"]
             time = data["time"]
             price = data["price"]
 
-            sql = ("INSERT INTO shopping_cart (user_id, attraction_id, date, time, price) VALUES (%s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE attraction_id=%s, date=%s, time=%s, price=%s")
-            sql_data = (user_id, attraction_id, date, time, price, attraction_id, date, time, price)
+            sql = ("INSERT INTO shopping_cart (user_id, attraction_id, attraction_name, attraction_address, attraction_images, date, time, price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE attraction_id=%s, attraction_name=%s, attraction_address=%s, attraction_images=%s, date=%s, time=%s, price=%s")
+            sql_data = (user_id, attraction_id, attraction_name, attraction_address, attraction_images, date, time, price, attraction_id, attraction_name, attraction_address, attraction_images, date, time, price)
 
             db.execute_sql(sql, sql_data, "one")
             db.cnx.commit()

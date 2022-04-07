@@ -12,5 +12,5 @@ MYSQL_CONFIG = {
     'database': 'taipei_attractions'
 }
 
-APP_ID = 124039
-APP_KEY = "app_RMLknzGTJatrHEEvYsMcWbFpiYvoiWlBqN4KQw3TLcp2Pd9g5164wJOrlsXr"
+APP_ID = os.getenv("app_id")
+APP_KEY = os.getenv("app_key")
