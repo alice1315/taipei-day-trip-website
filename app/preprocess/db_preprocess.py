@@ -88,6 +88,7 @@ TABLES['member'] = (
 
 TABLES['shopping_cart'] = (
     "CREATE TABLE `shopping_cart` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
     "  `user_id` bigint NOT NULL,"
     "  `attraction_id` bigint NOT NULL,"
     "  `attraction_name` varchar(50) NOT NULL,"
@@ -96,12 +97,14 @@ TABLES['shopping_cart'] = (
     "  `date` date NOT NULL,"
     "  `time` varchar(30) NOT NULL,"
     "  `price` int NOT NULL,"
-    "  PRIMARY KEY (`user_id`),"
+    "  PRIMARY KEY (`id`),"
+    "  UNIQUE (`user_id`),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
 
 TABLES['orders'] = (
     "CREATE TABLE `orders` ("
     "  `number` bigint NOT NULL AUTO_INCREMENT,"
+    "  `shopping_cart_id` bigint NOT NULL,"
     "  `user_id` bigint NOT NULL,"
     "  `contact_name` varchar(50) NOT NULL,"
     "  `contact_email` varchar(255) NOT NULL,"
@@ -117,6 +120,7 @@ TABLES['orders'] = (
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`number`),"
     "  UNIQUE (`number`),"
+    "  UNIQUE (`shopping_cart_id`),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
 
 TABLES['payment'] = (
@@ -126,7 +130,6 @@ TABLES['payment'] = (
     "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`number`),"
     "  FOREIGN KEY (`number`) REFERENCES orders(`number`))")         
 
 for table_name in TABLES:

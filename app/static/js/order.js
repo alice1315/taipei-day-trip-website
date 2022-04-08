@@ -1,7 +1,7 @@
 var orderData;
 
 function tappaySetUp(){
-    TPDirect.setupSDK(APP_ID, APP_KEY, "sandbox");
+    TPDirect.setupSDK("", "", "sandbox");
 
     let fields = {
         number: {
@@ -115,20 +115,25 @@ async function postOrderData(prime){
         body: formData
     }
     await initOrderData("/api/orders", fetchOptions);
-    console.log(orderData);
+
+    if (orderData["data"]["payment"]["status"] == 0){
+        location.href = "/thankyou";
+    } else{
+        console.log("付款失敗");
+    }
 }
 
 function makeOrder(){
     function handleMakeOrder(){
         if(checkStatus()){
-            TPDirect.card.getPrime((result) => {
+            TPDirect.card.getPrime(async (result) => {
                 if (result.status !== 0){
                     console.log("get prime error " + result.msg);
                     return;
                 }
                 let prime = result.card.prime;
-                postOrderData(prime);
-            })
+                await postOrderData(prime);
+            })  
         }
     }
 
