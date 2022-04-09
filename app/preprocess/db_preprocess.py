@@ -88,7 +88,6 @@ TABLES['member'] = (
 
 TABLES['shopping_cart'] = (
     "CREATE TABLE `shopping_cart` ("
-    "  `id` bigint NOT NULL AUTO_INCREMENT,"
     "  `user_id` bigint NOT NULL,"
     "  `attraction_id` bigint NOT NULL,"
     "  `attraction_name` varchar(50) NOT NULL,"
@@ -97,30 +96,28 @@ TABLES['shopping_cart'] = (
     "  `date` date NOT NULL,"
     "  `time` varchar(30) NOT NULL,"
     "  `price` int NOT NULL,"
-    "  PRIMARY KEY (`id`),"
-    "  UNIQUE (`user_id`),"
+    "  PRIMARY KEY (`user_id`),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
 
 TABLES['orders'] = (
     "CREATE TABLE `orders` ("
     "  `number` bigint NOT NULL AUTO_INCREMENT,"
-    "  `shopping_cart_id` bigint NOT NULL,"
     "  `user_id` bigint NOT NULL,"
-    "  `contact_name` varchar(50) NOT NULL,"
-    "  `contact_email` varchar(255) NOT NULL,"
-    "  `contact_phone` varchar(50) NOT NULL,"
     "  `attraction_id` bigint NOT NULL,"
     "  `attraction_name` varchar(50) NOT NULL,"
     "  `attraction_address` varchar(50),"
-    "  `attraction_image` varchar(3000),"
+    "  `attraction_image` varchar(600),"
+    "  `contact_name` varchar(10) NOT NULL,"
+    "  `contact_email` varchar(100) NOT NULL,"
+    "  `contact_phone` varchar(15) NOT NULL,"
     "  `date` date NOT NULL,"
-    "  `time` varchar(30) NOT NULL,"
+    "  `time` varchar(10) NOT NULL,"
     "  `price` int NOT NULL,"
     "  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`number`),"
     "  UNIQUE (`number`),"
-    "  UNIQUE (`shopping_cart_id`),"
+    "  CONSTRAINT order_items UNIQUE (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
 
 TABLES['payment'] = (
@@ -130,7 +127,7 @@ TABLES['payment'] = (
     "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`number`) REFERENCES orders(`number`))")         
+    "  FOREIGN KEY (`number`) REFERENCES orders(`number`))")       
 
 for table_name in TABLES:
     table_description = TABLES[table_name]

@@ -7,6 +7,7 @@ import json
 
 from . import api_
 from .. import db
+from ..config import PARTNER_KEY
 from app.models.auth import Auth
 
 # Order
@@ -16,6 +17,7 @@ def make_orders():
     if access_token:
         user_id = Auth.decode_auth_token(access_token)["data"]["id"]
 
+        # Get request body
         data = request.get_json()
         prime = data["prime"]
         # number = 
@@ -31,32 +33,18 @@ def make_orders():
         price = data["order"]["price"]
         status = "未付款"
 
-        sql = ("SELECT id FROM shopping_cart WHERE user_id=%s")
+        # Make an order
+        sql = ("INSERT IGNORE INTO orders (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+        sql_data = (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status)
+        db.execute_sql(sql, sql_data, "one")
+        db.cnx.commit()
+
+        sql = ("SELECT number FROM orders WHERE user_id=%s ORDER BY number DESC LIMIT 0,1")
         sql_data = (user_id, )
         result = db.execute_sql(sql, sql_data, "one")
-        shopping_cart_id = result["id"]
-        print("shopping_cart_id: ", shopping_cart_id)
-
-        sql = ("SELECT number FROM orders WHERE shopping_cart_id=%s")
-        sql_data = (shopping_cart_id, )
-        result = db.execute_sql(sql, sql_data, "one")
-        print("if order exists: ", result)
-
-        if not result:
-            sql = ("INSERT INTO orders (shopping_cart_id, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-            sql_data = (shopping_cart_id, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status)
-
-            db.execute_sql(sql, sql_data, "one")
-            db.cnx.commit()
-
-        sql = ("SELECT number FROM orders ORDER BY number DESC LIMIT 0,1")
-        sql_data = ()
-        result = db.execute_sql(sql, sql_data, "one")
         order_number = result["number"]
-        print("order_number: ", order_number)
 
-
-        print("parameter: ", prime, order_number, contact_phone, contact_name, contact_email)
+        # Make a payment
         payment_result = make_payment(prime, order_number, contact_phone, contact_name, contact_email)
 
         if payment_result:
@@ -89,12 +77,12 @@ def make_payment(prime, order_number, phone, name, email):
         url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
         headers = {
             "Content-Type": "application/json",
-            "x-api-key": ""
+            "x-api-key": PARTNER_KEY
         }
 
         data = {
                 "prime": prime,
-                "partner_key": "partner_pq2MUqpSrPTi2wLbhegU5y8ZLOLDNCnrYJXBa53dA8luh4WA3ex4T6RT",
+                "partner_key": PARTNER_KEY,
                 "merchant_id": "vientoa13_CTBC",
                 "details":"TapPay Test",
                 "amount": 1,
@@ -119,4 +107,45 @@ def make_payment(prime, order_number, phone, name, email):
 
         return payment_result
 
+@api_.route("/order/<orderNumber>", methods = ["GET"])
+def show_order(orderNumber):
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        Auth.decode_auth_token(access_token)["data"]["id"]
 
+        sql = ("SELECT number, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status FROM orders WHERE number=%s")
+        sql_data = (orderNumber, )
+        result = db.execute_sql(sql, sql_data, "one")
+
+        if result:
+            result_dict = {
+                "data": {
+                    "number": result["number"],
+                    "price": result["price"],
+                    "trip": {
+                        "attraction": {
+                            "id": result["attraction_id"],
+                            "name": result["attraction_name"],
+                            "address": result["attraction_address"],
+                            "image": result["attraction_image"]
+                        },
+                        "date": result["date"],
+                        "time": result["time"]
+                    },
+                    "contact": {
+                        "name": result["contact_name"],
+                        "email": result["contact_email"],
+                        "phone": result["contact_phone"]
+                    },
+                    "status": result["status"] 
+                }
+            }
+            return jsonify(result_dict)
+
+        else:
+            result_dict = {"data": None}
+            return jsonify(result_dict)
+
+    else:
+        result_dict = {"error": True, "message": "未登入系統"}
+        return make_response(jsonify(result_dict), 403)

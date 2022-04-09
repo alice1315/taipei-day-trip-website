@@ -117,7 +117,8 @@ async function postOrderData(prime){
     await initOrderData("/api/orders", fetchOptions);
 
     if (orderData["data"]["payment"]["status"] == 0){
-        location.href = "/thankyou";
+        let order_number = orderData["data"]["number"];
+        location.href = `/thankyou?number=${order_number}`;
     } else{
         console.log("付款失敗");
     }
