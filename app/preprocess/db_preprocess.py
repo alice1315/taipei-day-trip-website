@@ -101,7 +101,7 @@ TABLES['shopping_cart'] = (
 
 TABLES['orders'] = (
     "CREATE TABLE `orders` ("
-    "  `number` bigint NOT NULL AUTO_INCREMENT,"
+    "  `order_number` bigint NOT NULL,"
     "  `user_id` bigint NOT NULL,"
     "  `attraction_id` bigint NOT NULL,"
     "  `attraction_name` varchar(50) NOT NULL,"
@@ -115,19 +115,18 @@ TABLES['orders'] = (
     "  `price` int NOT NULL,"
     "  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
-    "  PRIMARY KEY (`number`),"
-    "  UNIQUE (`number`),"
+    "  PRIMARY KEY (`order_number`),"
     "  CONSTRAINT order_items UNIQUE (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
 
 TABLES['payment'] = (
     "CREATE TABLE `payment` ("
     "  `id` bigint NOT NULL AUTO_INCREMENT,"
-    "  `number` bigint NOT NULL,"
+    "  `order_number` bigint NOT NULL,"
     "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`id`),"
-    "  FOREIGN KEY (`number`) REFERENCES orders(`number`))")       
+    "  FOREIGN KEY (`order_number`) REFERENCES orders(`order_number`))")   
 
 for table_name in TABLES:
     table_description = TABLES[table_name]

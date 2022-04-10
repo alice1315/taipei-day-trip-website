@@ -100,3 +100,4 @@ def delete_booking():
     else:
         result_dict = {"error": True, "message": "未登入系統"}
         return make_response(jsonify(result_dict), 403)
+        

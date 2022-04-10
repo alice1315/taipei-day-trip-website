@@ -12,6 +12,4 @@ MYSQL_CONFIG = {
     'database': 'taipei_attractions'
 }
 
-APP_ID = os.getenv("app_id")
-APP_KEY = os.getenv("app_key")
 PARTNER_KEY = os.getenv("partner_key")

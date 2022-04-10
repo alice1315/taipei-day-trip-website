@@ -1,7 +1,8 @@
 var orderData;
+var orderMsg = document.getElementById("order-msg");
 
 function tappaySetUp(){
-    TPDirect.setupSDK("", "", "sandbox");
+    TPDirect.setupSDK(124039, "app_RMLknzGTJatrHEEvYsMcWbFpiYvoiWlBqN4KQw3TLcp2Pd9g5164wJOrlsXr", "sandbox");
 
     let fields = {
         number: {
@@ -68,7 +69,6 @@ function checkStatus(){
     let con2 = updateContactStatus(contactEmail, document.getElementById("email-msg"));
     let con3 = updateContactStatus(contactPhone, document.getElementById("phone-msg"));
     
-    let orderMsg = document.getElementById("order-msg");
     if (tappayStatus.canGetPrime === false | !con1 | !con2 | !con3){
         orderMsg.innerText = "訂購資訊有誤，請再次確認";
         return false;
@@ -115,13 +115,6 @@ async function postOrderData(prime){
         body: formData
     }
     await initOrderData("/api/orders", fetchOptions);
-
-    if (orderData["data"]["payment"]["status"] == 0){
-        let order_number = orderData["data"]["number"];
-        location.href = `/thankyou?number=${order_number}`;
-    } else{
-        console.log("付款失敗");
-    }
 }
 
 function makeOrder(){
@@ -134,7 +127,14 @@ function makeOrder(){
                 }
                 let prime = result.card.prime;
                 await postOrderData(prime);
-            })  
+                
+                if (orderData["data"]["payment"]["status"] == 0){
+                    let order_number = orderData["data"]["number"];
+                    location.href = `/thankyou?number=${order_number}`;
+                } else{
+                    orderMsg.innerText = "付款失敗，請重新確認信用卡資料，或洽信用卡發卡銀行處理";
+                }
+            })            
         }
     }
 

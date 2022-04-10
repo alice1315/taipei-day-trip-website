@@ -15,10 +15,9 @@
 }
 
 @media screen and (min-width: 750px) and (max-width: 1250px){
-    .content{width: 95%;}
+    #content{width: 95%;}
 }
 
 @media screen and (max-width: 750px){
-    .content{width: 95%;}
-
+    #content{width: 95%;}
 }
