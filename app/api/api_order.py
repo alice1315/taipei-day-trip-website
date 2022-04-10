@@ -33,20 +33,27 @@ def make_orders():
         price = data["order"]["price"]
         status = "未付款"
 
-        # Set order number
-        result = set_order_number()
-        if not result:
-            order_number = datetime.now().strftime("%Y%m%d") + "0001"
-        elif result and result["status"] == "已付款":
-            order_number = result["order_number"] + 1
-        else:
+        # Check if order exists
+        sql = ("SELECT order_number FROM orders WHERE user_id=%s and attraction_id=%s and attraction_name=%s and attraction_address=%s and attraction_image=%s and contact_name=%s and contact_email=%s and contact_phone=%s and date=%s and time=%s and price=%s")
+        sql_data = (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price)
+        result = db.execute_sql(sql, sql_data, "one")
+
+        if result:
             order_number = result["order_number"]
 
-        # Make an order
-        sql = ("INSERT IGNORE INTO orders (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-        sql_data = (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status)
-        db.execute_sql(sql, sql_data, "one")
-        db.cnx.commit()
+        else:
+            # Set order number
+            result = set_order_number()
+            if not result:
+                order_number = datetime.now().strftime("%Y%m%d") + "0001"
+            else:
+                order_number = result["order_number"] + 1
+
+            # Make an order
+            sql = ("INSERT IGNORE INTO orders (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+            sql_data = (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status)
+            db.execute_sql(sql, sql_data, "one")
+            db.cnx.commit()
 
         # Make a payment
         payment_result = make_payment(prime, order_number, contact_phone, contact_name, contact_email)
@@ -155,7 +162,7 @@ def make_payment(prime, order_number, phone, name, email):
         return payment_result
 
 def set_order_number():
-    sql = ("SELECT order_number,status FROM orders WHERE DATE(order_time)=CURDATE() ORDER BY order_number DESC LIMIT 0,1")
+    sql = ("SELECT user_id, order_number, status FROM orders WHERE DATE(order_time)=CURDATE() ORDER BY order_number DESC LIMIT 0,1")
     sql_data = ()
     result = db.execute_sql(sql, sql_data, "one")
     return result
