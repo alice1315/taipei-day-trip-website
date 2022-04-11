@@ -90,12 +90,43 @@ TABLES['shopping_cart'] = (
     "CREATE TABLE `shopping_cart` ("
     "  `user_id` bigint NOT NULL,"
     "  `attraction_id` bigint NOT NULL,"
+    "  `attraction_name` varchar(50) NOT NULL,"
+    "  `attraction_address` varchar(50),"
+    "  `attraction_images` varchar(3000),"
     "  `date` date NOT NULL,"
     "  `time` varchar(30) NOT NULL,"
     "  `price` int NOT NULL,"
     "  PRIMARY KEY (`user_id`),"
-    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`),"
-    "  FOREIGN KEY (`attraction_id`) REFERENCES spots(`id`))")
+    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
+
+TABLES['orders'] = (
+    "CREATE TABLE `orders` ("
+    "  `order_number` bigint NOT NULL,"
+    "  `user_id` bigint NOT NULL,"
+    "  `attraction_id` bigint NOT NULL,"
+    "  `attraction_name` varchar(50) NOT NULL,"
+    "  `attraction_address` varchar(50),"
+    "  `attraction_image` varchar(600),"
+    "  `contact_name` varchar(10) NOT NULL,"
+    "  `contact_email` varchar(100) NOT NULL,"
+    "  `contact_phone` varchar(15) NOT NULL,"
+    "  `date` date NOT NULL,"
+    "  `time` varchar(10) NOT NULL,"
+    "  `price` int NOT NULL,"
+    "  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "  `status` varchar(5) NOT NULL,"
+    "  PRIMARY KEY (`order_number`),"
+    "  CONSTRAINT order_items UNIQUE (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price),"
+    "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
+
+TABLES['payment'] = (
+    "CREATE TABLE `payment` ("
+    "  `id` bigint NOT NULL AUTO_INCREMENT,"
+    "  `order_number` bigint NOT NULL,"
+    "  `payment_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+    "  `status` varchar(5) NOT NULL,"
+    "  PRIMARY KEY (`id`),"
+    "  FOREIGN KEY (`order_number`) REFERENCES orders(`order_number`))")   
 
 for table_name in TABLES:
     table_description = TABLES[table_name]
@@ -109,6 +140,7 @@ for table_name in TABLES:
             print(err.msg)
     else:
         print("OK")
+
 
 """
 # Inserting datas

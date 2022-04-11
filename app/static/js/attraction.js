@@ -84,10 +84,10 @@ function currentSlide(n) {
     showImages(imageIndex = n);
 }
 
-function changePrice(e){
+function changePrice(time){
     let price = document.getElementById("price");
 
-    switch (e){
+    switch (time){
         case "morning":
             price.innerText = "2000";
             break;

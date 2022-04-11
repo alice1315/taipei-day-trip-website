@@ -1,10 +1,16 @@
 var bookingUrl = "/api/booking";
 var bookingData;
 
+var contactName = document.getElementById("contact-name");
+var contactEmail = document.getElementById("contact-email");
+var contactPhone = document.getElementById("contact-phone");
+
 async function bookingInit(){
     await initBookingData({method: "GET"});
     renderBookingPage();
     deleteBooking();
+    tappaySetUp();
+    makeOrder();
 }
 
 async function initBookingData(fetchOptions){
@@ -79,10 +85,17 @@ function renderBookingPage(){
             img.src = data["attraction"]["image"];
             attractionName.innerText = data["attraction"]["name"];
             date.innerText = data["date"];
-            time.innerText = data["time"];
+            if (data["time"] == "morning"){
+                time.innerText = "早上 9 點至 12 點";
+            } else{
+                time.innerText = "下午 1 點至 4 點";
+            }
             price.innerText = data["price"];
             address.innerText = data["attraction"]["address"];
             totalPrice.innerText = data["price"];
+
+            contactName.setAttribute("value", userData["data"]["name"]);
+            contactEmail.setAttribute("value", userData["data"]["email"]);
         } else{
             document.getElementById("booking-msg").innerText = "目前沒有任何待預定的行程";
         }

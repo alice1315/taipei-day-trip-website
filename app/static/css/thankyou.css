@@ -1,0 +1,23 @@
+.sign{
+    text-align: center;
+}
+
+#content{
+    margin: 91px auto 100px auto;
+    width: 1200px;
+    text-align: center;
+}
+
+.thankyou-title{
+    margin-bottom: 25px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 750px) and (max-width: 1250px){
+    #content{width: 95%;}
+}
+
+@media screen and (max-width: 750px){
+    #content{width: 95%;}
+}

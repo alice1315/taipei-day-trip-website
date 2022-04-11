@@ -11,3 +11,5 @@ MYSQL_CONFIG = {
     'host': '127.0.0.1',
     'database': 'taipei_attractions'
 }
+
+PARTNER_KEY = os.getenv("partner_key")

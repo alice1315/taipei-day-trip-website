@@ -33,6 +33,7 @@ async function checkSignedIn(){
     if(isSignedIn()){
         toggleBlock(signBtn, signOutBtn);
     }
+    document.body.classList.remove("hide");
 }
 
 function isSignedIn(){
