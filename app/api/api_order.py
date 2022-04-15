@@ -127,6 +127,59 @@ def show_order(orderNumber):
         result_dict = {"error": True, "message": "未登入系統"}
         return make_response(jsonify(result_dict), 403)
 
+@api_.route("/member/orders", methods = ["GET"])
+def get_member_orders():
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        user_id = Auth.decode_auth_token(access_token)["data"]["id"]
+
+        sql = ("SELECT order_time, order_number, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status FROM orders  WHERE user_id=%s ORDER BY order_number DESC")
+        sql_data = (user_id, )
+        results = db.execute_sql(sql, sql_data, "all")
+
+        if results:
+            order_list = []
+            for result in results:
+                new_result = {
+                    "order_date": datetime.strftime(result["order_time"], "%Y-%m-%d"),
+                    "number": result["order_number"],
+                    "price": result["price"],
+                    "trip": {
+                        "attraction": {
+                            "id": result["attraction_id"],
+                            "name": result["attraction_name"],
+                            "address": result["attraction_address"],
+                            "image": result["attraction_image"]
+                        },
+                        "date": datetime.strftime(result["date"], "%Y-%m-%d"),
+                        "time": result["time"]
+                    },
+                    "contact": {
+                        "name": result["contact_name"],
+                        "email": result["contact_email"],
+                        "phone": result["contact_phone"]
+                    },
+                    "status": result["status"]
+                }
+
+                order_list.append(new_result)
+
+            result_dict = {
+                "data": {
+                    "user_id": user_id,
+                    "order_data": order_list
+                }
+            }
+            return jsonify(result_dict)
+
+        else:
+            result_dict = {"data": None}
+            return jsonify(result_dict)
+    
+    else:
+        result_dict = {"error": True, "message": "未登入系統"}
+        return make_response(jsonify(result_dict), 403)
+
 # Utils
 def make_payment(prime, order_number, phone, name, email):
         url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"

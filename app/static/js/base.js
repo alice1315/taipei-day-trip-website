@@ -8,7 +8,7 @@ var signInMsg = document.getElementById("signin-msg");
 var signUpMsg = document.getElementById("signup-msg");
 
 var signBtn = document.getElementById("header-sign-btn");
-var signOutBtn = document.getElementById("header-signout-btn");
+var memberBtn = document.getElementById("header-member-btn");
 
 async function baseInit(){
     checkSignedIn();
@@ -31,7 +31,7 @@ async function checkSignedIn(){
     let fetchOptions = {method: "GET"};
     await initUserData(fetchOptions);
     if(isSignedIn()){
-        toggleBlock(signBtn, signOutBtn);
+        toggleBlock(signBtn, memberBtn);
     }
     document.body.classList.remove("hide");
 }
@@ -114,6 +114,7 @@ function signOut(){
         }
     }
 
+    let signOutBtn = document.getElementById("signout-btn");
     signOutBtn.addEventListener("click", handleSignOutSubmit);
 }
 
@@ -149,6 +150,15 @@ function handleSignBtn(){
     signInForm.classList.add("slidein");
 }
 
+function handleMemberBtn(){
+    let memberCenter = document.getElementById("member-center");
+    memberCenter.classList.toggle("hide");
+}
+
+function handleToMemberOrdersBtn(){
+    location.href = "/member/orders";
+}
+
 function handleBookingBtn(){
     if (isSignedIn()){
         location.href = "/booking";
@@ -175,10 +185,13 @@ function handleBtns(){
     let toSignInBtn = document.getElementById("open-signin");
     let toSignUpBtn = document.getElementById("open-signup");
     let closeBtn = document.querySelectorAll(".close");
+    let toMemberOrdersBtn = document.getElementById("member-orders-btn");
 
     signBtn.addEventListener("click", handleSignBtn);
     bookingBtn.addEventListener("click", handleBookingBtn);
+    memberBtn.addEventListener("click", handleMemberBtn);
     toSignInBtn.addEventListener("click", handleToSignBtn);
     toSignUpBtn.addEventListener("click", handleToSignBtn);
     closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn));
+    toMemberOrdersBtn.addEventListener("click", handleToMemberOrdersBtn);
 }

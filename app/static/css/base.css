@@ -91,6 +91,34 @@ li{
     color: #666666;
 }
 
+#member-center{
+    position: fixed;
+    z-index: 10;
+    width: 1200px;
+    top: 54px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#member-center ul{
+    position: relative;
+    float: right;
+    width: 100px;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 5px 1px #AAAAAA;
+}
+
+#member-center ul li{
+    line-height: 40px;
+    border-bottom: 1px solid #E8E8E8;
+    text-align: center;
+}
+
 /* sign */
 #modal{
     position: fixed;
@@ -197,10 +225,14 @@ li{
 
 @media screen and (min-width: 600px) and (max-width: 1400px){
     .container{width: 90%;}
+
+    #member-center{width: 90%;}
 }
 
 @media screen and (max-width: 600px){
     .container{width: 92%}
+
+    #member-center{width: 92%;}
 
     li{
         width: 72px;

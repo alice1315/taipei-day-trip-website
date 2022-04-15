@@ -1,3 +1,7 @@
+.sign{
+    text-align: center;
+}
+
 /* base */
 #content{
     margin: 91px auto 100px auto;
@@ -8,6 +12,12 @@
 .page-title{
     font-size: 24px;
     font-weight: bold;
+}
+
+#orders-msg{
+    height: 100px;
+    margin-top: -50px;
+    text-align: center;
 }
 
 /* orders-menu */
