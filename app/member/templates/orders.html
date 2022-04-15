@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/orders.css')}}" />
+    </head>
+
+    <body onload="baseInit();">
+        {% extends "base.html" %}
+
+        {% block body %}
+        <div id="content">
+            <div class="page-title">訂單資料</div>
+            <ul id="order-menu">
+                <li class="title">訂購日期</li>
+                <li class="title">訂單號碼</li>
+                <li class="title order-items-1">訂購內容</li>
+                <li class="title">付款狀態</li>
+            </ul>
+            <div class="block">
+                <div class="order-date">2022-02-22</div>
+                <div class="order-number">202202220003</div>
+                <div class="order-items order-items-1">台北一日遊：<span>關渡、金色水岸、八里左岸自行車道</span></div>
+                <img class="more" src="{{url_for('static', filename='img/btn_down.png')}}"/>
+                <div>未付款</div>
+                <div class="order-info">
+                    <div class="attraction-img">
+                        <img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C0/D14/E810/F21/48d66fbd-1ba3-4efd-837a-3767db5f52e0.jpg"/>
+                    </div>
+                    <div class="order-items order-items-2">台北一日遊：<span>關渡、金色水岸、八里左岸自行車道</span></div>
+                    <div>
+                        <div class="text">日期： <span>2022-05-16</span></div>
+                        <div class="text">時間： <span>早上 9 點至 12 點</span></div>
+                        <div class="text">費用： 新台幣 <span> 2000 </span> 元</div>
+                        <div class="text">地址： <span>臺北市 士林區至善路二段221號</span></div>
+                        <br/>
+                        <div class="text">聯絡姓名： <span>黃允謙</span></div>
+                        <div class="text">聯絡信箱： <span>viento.a13@gmail.com</span></div>
+                        <div class="text">聯絡電話： <span>0912-369-050</span></div>
+                    </div>
+                    <div>
+                        <button class="order-btn">重新付款</button>
+                        <button class="order-btn">取消訂單</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="{{url_for('static', filename='js/order.js')}}"></script>
+        {% endblock body %}
+
+    </body>
+</html>
