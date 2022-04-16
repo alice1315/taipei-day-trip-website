@@ -14,6 +14,15 @@
     font-weight: bold;
 }
 
+a{
+    color: inherit;
+    text-decoration: underline;
+}
+
+a:hover{
+    color: #448899;
+}
+
 @media screen and (min-width: 750px) and (max-width: 1250px){
     #content{width: 95%;}
 }

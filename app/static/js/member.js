@@ -1,12 +1,12 @@
 var memberOrdersData;
 
 async function memberOrdersInit(){
-    await initMemberOrdersData();
+    await initMemberOrdersData("/api/orders", {method: "GET"});
     renderMemberOrdersPage();
 }
 
-async function initMemberOrdersData(){
-    await fetch("/api/member/orders", {method: "GET"})
+async function initMemberOrdersData(url, fetchOptions){
+    await fetch(url, fetchOptions)
     .then((resp) => {
         return resp.json()
     }).then((result) => {
@@ -46,8 +46,8 @@ function renderMemberOrdersPage(){
                 attractionName1.textContent = orders[i]["trip"]["attraction"]["name"];
                 moreImg.src = "/img/btn_down.png";
                 status.textContent = orders[i]["status"];
-                repayBtn.textContent = "重新付款";
-                cancelOrderBtn.textContent = "取消訂單";
+                repayBtn.innerHTML = "重新付款";
+                cancelOrderBtn.innerHTML = "取消訂單";
 
                 // Set order info
                 let orderInfo = document.createElement("div");
@@ -117,13 +117,15 @@ function renderMemberOrdersPage(){
                 if (orders[i]["status"] == "未付款"){
                     status.style.color = "#CF4B49";
                     btns.appendChild(repayBtn);
+                    btns.appendChild(cancelOrderBtn);
+                } else if (orders[i]["status"] == "已付款"){
+                    status.style.color = "#0C874A";
+                    btns.appendChild(cancelOrderBtn);
                 } else{
-                    status.style.color = "#006633";
                 }
 
-                btns.appendChild(cancelOrderBtn);
-
                 toggleOrderInfo(moreImg, orderInfo);
+                cancelOrder(cancelOrderBtn, orders[i]["number"]);
             }
         } else{
             let orderMsg = document.getElementById("orders-msg");
@@ -135,5 +137,19 @@ function renderMemberOrdersPage(){
 }
 
 function toggleOrderInfo(btn, target){
-    btn.addEventListener("click", function(){target.classList.toggle("hide")});
+    btn.addEventListener("click", function(){
+        target.classList.toggle("hide");
+    });
+}
+
+function cancelOrder(btn, orderNumber){
+    btn.addEventListener("click", async function(){
+        await initMemberOrdersData("/api/order/" + orderNumber, {method: "DELETE"});
+        if (memberOrdersData["ok"]){
+            console.log("取消成功");
+        } else{
+            console.log("取消失敗");
+        }
+        location.reload(true);
+    });
 }

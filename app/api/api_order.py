@@ -1,6 +1,4 @@
-from flask import request
-from flask import make_response
-from flask import jsonify
+from flask import request, make_response, jsonify
 
 import requests
 import json
@@ -13,7 +11,7 @@ from app.models.auth import Auth
 
 # Order
 @api_.route("/orders", methods = ["POST"])
-def make_orders():
+def make_order():
     access_token = request.cookies.get("access_token")
     if access_token:
         user_id = Auth.decode_auth_token(access_token)["data"]["id"]
@@ -127,7 +125,7 @@ def show_order(orderNumber):
         result_dict = {"error": True, "message": "未登入系統"}
         return make_response(jsonify(result_dict), 403)
 
-@api_.route("/member/orders", methods = ["GET"])
+@api_.route("/orders", methods = ["GET"])
 def get_member_orders():
     access_token = request.cookies.get("access_token")
     if access_token:
@@ -176,6 +174,65 @@ def get_member_orders():
             result_dict = {"data": None}
             return jsonify(result_dict)
     
+    else:
+        result_dict = {"error": True, "message": "未登入系統"}
+        return make_response(jsonify(result_dict), 403)
+
+@api_.route("/order/<orderNumber>", methods = ["DELETE"])
+def delete_order(orderNumber):
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        user_id = Auth.decode_auth_token(access_token)["data"]["id"]
+
+        sql = ("UPDATE orders SET status='已取消' WHERE user_id=%s and order_number=%s")
+        sql_data = (user_id, orderNumber)
+        rowcount = db.execute_sql(sql, sql_data, "rowcount")
+        db.cnx.commit()
+
+        if rowcount == 1:
+            result_dict = {"ok": True}
+            return jsonify(result_dict)
+        else:
+           result_dict = {"error": True, "message": "訂單取消失敗"}
+           return make_response(jsonify(result_dict), 400)
+
+    else:
+        result_dict = {"error": True, "message": "未登入系統"}
+        return make_response(jsonify(result_dict), 403)
+
+@api_.route("/orders/repay", methods = ["POST"])
+def repay_order():
+    access_token = request.cookies.get("access_token")
+    if access_token:
+        user_id = Auth.decode_auth_token(access_token)["data"]["id"]
+
+        # Get request body
+        data = request.get_json()
+        prime = data["prime"]
+        order_number = data["order"]["number"]
+        contact_name = data["order"]["contact"]["name"]
+        contact_email = data["order"]["contact"]["email"]
+        contact_phone = data["order"]["contact"]["phone"]
+
+        # Make a payment
+        payment_result = make_payment(prime, order_number, contact_phone, contact_name, contact_email)
+
+        if payment_result:
+            if payment_result["status"] == 0:
+                sql = ("UPDATE orders SET status='已付款' WHERE order_number=%s")
+                sql_data = (order_number, )
+                db.execute_sql(sql, sql_data, "one")
+                db.cnx.commit()
+
+                result_dict = {"data": {"number": order_number, "payment": {"status": 0, "message": "付款成功"}}}
+                return jsonify(result_dict)
+            else:
+                result_dict = {"data": {"number": order_number, "payment": {"status": payment_result["status"], "message": payment_result["msg"]}}}
+                return jsonify(result_dict)
+        else:
+            result_dict = {"error": True, "message": "訂單建立失敗"}
+            return make_response(jsonify(result_dict), 400)
+
     else:
         result_dict = {"error": True, "message": "未登入系統"}
         return make_response(jsonify(result_dict), 403)

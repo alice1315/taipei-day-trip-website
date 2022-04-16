@@ -152,11 +152,7 @@ function handleSignBtn(){
 
 function handleMemberBtn(){
     let memberCenter = document.getElementById("member-center");
-    memberCenter.classList.toggle("hide");
-}
-
-function handleToMemberOrdersBtn(){
-    location.href = "/member/orders";
+    memberCenter.classList.toggle("slideshow");
 }
 
 function handleBookingBtn(){
@@ -189,9 +185,8 @@ function handleBtns(){
 
     signBtn.addEventListener("click", handleSignBtn);
     bookingBtn.addEventListener("click", handleBookingBtn);
-    memberBtn.addEventListener("click", handleMemberBtn);
+    memberBtn.addEventListener("focus", handleMemberBtn);
     toSignInBtn.addEventListener("click", handleToSignBtn);
     toSignUpBtn.addEventListener("click", handleToSignBtn);
     closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn));
-    toMemberOrdersBtn.addEventListener("click", handleToMemberOrdersBtn);
 }
