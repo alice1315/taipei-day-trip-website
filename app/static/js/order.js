@@ -144,6 +144,7 @@ function makeOrder(){
 }
 
 function renderPaymentMsg(orderNumber){
+    let modal = document.createElement("div");
     let windowMsg = document.createElement("div");
     let msgBorder = document.createElement("div");
     let msgTitle = document.createElement("div");
@@ -153,6 +154,7 @@ function renderPaymentMsg(orderNumber){
     let repayBtn = document.createElement("button");
     let continueBtn = document.createElement("button");
 
+    modal.setAttribute("class", "modal");
     windowMsg.setAttribute("class", "window-msg");
     msgBorder.setAttribute("class", "msg-border");
     msgTitle.setAttribute("class", "msg-title");
@@ -168,7 +170,8 @@ function renderPaymentMsg(orderNumber){
     repayBtn.innerHTML = "重新付款";
     continueBtn.innerHTML = "繼續瀏覽"
 
-    document.body.appendChild(windowMsg);
+    document.body.appendChild(modal);
+    modal.appendChild(windowMsg);
     windowMsg.appendChild(msgBorder);
     windowMsg.appendChild(msgTitle);
     windowMsg.appendChild(orderCon);

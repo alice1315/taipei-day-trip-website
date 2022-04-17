@@ -191,6 +191,7 @@ function handleBtns(){
 }
 
 function renderWindowMsg(title, content, reload){
+    let modal = document.createElement("div");
     let windowMsg = document.createElement("div");
     let msgBorder = document.createElement("div");
     let closeCon = document.createElement("a");
@@ -198,6 +199,7 @@ function renderWindowMsg(title, content, reload){
     let msgTitle = document.createElement("div");
     let msgContent = document.createElement("div");
 
+    modal.setAttribute("class", "modal");
     windowMsg.setAttribute("class", "window-msg");
     msgBorder.setAttribute("class", "msg-border");
     closeCon.setAttribute("class", "close");
@@ -208,7 +210,8 @@ function renderWindowMsg(title, content, reload){
     msgTitle.textContent = title;
     msgContent.textContent = content;
 
-    document.body.appendChild(windowMsg);
+    document.body.appendChild(modal);
+    modal.appendChild(windowMsg);
     windowMsg.appendChild(msgBorder);
     windowMsg.appendChild(closeCon);
     closeCon.appendChild(closeImg);
