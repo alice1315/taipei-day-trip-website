@@ -100,6 +100,7 @@ function renderBookingPage(){
             document.getElementById("booking-msg").innerText = "目前沒有任何待預定的行程";
         }
     } else{
+        document.body.innerHTML = "";
         window.location.href = "/";
     }
 }
@@ -108,6 +109,7 @@ function deleteBooking(){
     async function handleDeleteBooking(){
         await initBookingData({method: "DELETE"});
         if (bookingData["ok"]){
+            document.body.innerHTML = "";
             location.reload(true);
         }
     }

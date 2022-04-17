@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{{url_for('static', filename='css/orders.css')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/member_orders.css')}}" />
     </head>
 
     <body onload="baseInit(); memberOrdersInit();">
@@ -20,6 +20,7 @@
         <div id="orders-msg"></div>
 
         <script src="{{url_for('static', filename='js/member_orders.js')}}"></script>
+        <script src="{{url_for('static', filename='js/order.js')}}"></script>
         {% endblock body %}
 
     </body>

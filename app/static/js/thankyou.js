@@ -22,6 +22,7 @@ function renderThankyouPage(){
         document.getElementById("content").classList.remove("hide");
         document.getElementById("order-number").innerText = orderNumberData["data"]["number"];
     } else{
+        document.body.innerHTML = "";
         window.location.href = "/";
     }
 }

@@ -68,8 +68,7 @@ def make_booking():
             sql = ("INSERT INTO shopping_cart (user_id, attraction_id, attraction_name, attraction_address, attraction_images, date, time, price) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE attraction_id=%s, attraction_name=%s, attraction_address=%s, attraction_images=%s, date=%s, time=%s, price=%s")
             sql_data = (user_id, attraction_id, attraction_name, attraction_address, attraction_images, date, time, price, attraction_id, attraction_name, attraction_address, attraction_images, date, time, price)
 
-            db.execute_sql(sql, sql_data, "one")
-            db.cnx.commit()
+            db.execute_sql(sql, sql_data, "one", commit=True)
 
             result_dict = {"ok": True}
             return jsonify(result_dict)
@@ -90,8 +89,7 @@ def delete_booking():
         sql = ("DELETE FROM shopping_cart WHERE user_id=%s")
         sql_data = (user_id, )
 
-        db.execute_sql(sql, sql_data, "one")
-        db.cnx.commit()
+        db.execute_sql(sql, sql_data, "one", commit=True)
 
         result_dict = {"ok": True}
         return jsonify(result_dict)

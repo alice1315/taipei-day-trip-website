@@ -132,6 +132,7 @@ function renderMemberOrdersPage(){
             orderMsg.innerText = "查無訂單資料";
         }
     } else{
+        document.body.innerHTML = "";
         window.location.href = "/";
     }
 }
@@ -155,6 +156,7 @@ function cancelOrder(btn, orderNumber){
 
 function repayOrder(btn, orderNumber){
     btn.addEventListener("click", function(){
+        document.body.innerHTML = "";
         location.href = `/member/orders/repay?number=${orderNumber}`;
     })
 }

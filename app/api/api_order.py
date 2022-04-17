@@ -31,27 +31,21 @@ def make_order():
         price = data["order"]["price"]
         status = "未付款"
 
-        # Check if order exists
-        sql = ("SELECT order_number FROM orders WHERE user_id=%s and attraction_id=%s and attraction_name=%s and attraction_address=%s and attraction_image=%s and contact_name=%s and contact_email=%s and contact_phone=%s and date=%s and time=%s and price=%s")
-        sql_data = (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price)
-        result = db.execute_sql(sql, sql_data, "one")
-
-        if result:
-            order_number = result["order_number"]
-
+        # Set order number
+        result = set_order_number()
+        if not result:
+            order_number = datetime.now().strftime("%Y%m%d") + "0001"
         else:
-            # Set order number
-            result = set_order_number()
-            if not result:
-                order_number = datetime.now().strftime("%Y%m%d") + "0001"
-            else:
-                order_number = result["order_number"] + 1
+            order_number = result["order_number"] + 1
 
-            # Make an order
-            sql = ("INSERT IGNORE INTO orders (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-            sql_data = (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status)
-            db.execute_sql(sql, sql_data, "one")
-            db.cnx.commit()
+        # Make an order
+        sql = ("INSERT INTO orders (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+        sql_data = (order_number, user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price, status)
+        db.execute_sql(sql, sql_data, "one", commit=True)
+
+        sql = ("DELETE FROM shopping_cart WHERE user_id=%s")
+        sql_data = (user_id, )
+        db.execute_sql(sql, sql_data, "one", commit=True)
 
         # Make a payment
         payment_result = make_payment(prime, order_number, contact_phone, contact_name, contact_email)
@@ -60,13 +54,7 @@ def make_order():
             if payment_result["status"] == 0:
                 sql = ("UPDATE orders SET status='已付款' WHERE order_number=%s")
                 sql_data = (order_number, )
-                db.execute_sql(sql, sql_data, "one")
-                db.cnx.commit()
-
-                sql = ("DELETE FROM shopping_cart WHERE user_id=%s")
-                sql_data = (user_id, )
-                db.execute_sql(sql, sql_data, "one")
-                db.cnx.commit()
+                db.execute_sql(sql, sql_data, "one", commit=True)
 
                 result_dict = {"data": {"number": order_number, "payment": {"status": 0, "message": "付款成功"}}}
                 return jsonify(result_dict)
@@ -186,8 +174,7 @@ def delete_order(orderNumber):
 
         sql = ("UPDATE orders SET status='已取消' WHERE user_id=%s and order_number=%s")
         sql_data = (user_id, orderNumber)
-        rowcount = db.execute_sql(sql, sql_data, "rowcount")
-        db.cnx.commit()
+        rowcount = db.execute_sql(sql, sql_data, "rowcount", commit=True)
 
         if rowcount == 1:
             result_dict = {"ok": True}
@@ -226,8 +213,7 @@ def repay_order():
             if payment_result["status"] == 0:
                 sql = ("UPDATE orders SET status='已付款' WHERE order_number=%s")
                 sql_data = (order_number, )
-                db.execute_sql(sql, sql_data, "one")
-                db.cnx.commit()
+                db.execute_sql(sql, sql_data, "one", commit=True)
 
                 result_dict = {"data": {"number": order_number, "payment": {"status": 0, "message": "付款成功"}}}
                 return jsonify(result_dict)
@@ -271,8 +257,7 @@ def make_payment(prime, order_number, phone, name, email):
 
         sql = ("INSERT INTO payment (order_number, status) VALUES (%s, %s)")
         sql_data = (order_number, y(payment_result))
-        db.execute_sql(sql, sql_data, "one")
-        db.cnx.commit()
+        db.execute_sql(sql, sql_data, "one", commit=True)
 
         return payment_result
 

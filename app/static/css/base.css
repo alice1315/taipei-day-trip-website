@@ -177,6 +177,7 @@ li{
     from {top: 0;}
 }
 
+/* MSG */
 .msg-border{
     height: 10px;
     background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
@@ -191,9 +192,15 @@ li{
 }
 
 .msg-content{
-    padding: 10px 30px;
+    padding: 10px 15px;
     word-wrap: break-word;
     text-align: center;
+}
+
+.msg-btn-con{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0 10px 0;
 }
 
 .close{
@@ -232,6 +239,48 @@ li{
 #open-signup, #open-signin{
     cursor: pointer;
     text-decoration: underline;
+}
+
+.loading{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+
+/* Loading GIF*/
+.lds-ring {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 50px auto;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 6px solid #448899;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #448899 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
 }
 
 /* footer */

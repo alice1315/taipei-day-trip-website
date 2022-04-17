@@ -25,42 +25,41 @@ function renderRepayPage(){
         let name = document.getElementById("name");
         name.innerText = userData["data"]["name"];
 
-        if (repayData["data"]){
-            document.getElementById("booking").classList.remove("hide");
-            let data = repayData["data"];
+        
+        document.getElementById("booking").classList.remove("hide");
+        let data = repayData["data"];
 
-            let orderNumber = document.getElementById("order-number");
-            let img = document.getElementById("image");
-            let attractionName = document.getElementById("attraction-name");
-            let date = document.getElementById("date");
-            let time = document.getElementById("time");
-            let price = document.getElementById("price");
-            let address = document.getElementById("address");
-            let contactName = document.getElementById("contact-name");
-            let contactEmail = document.getElementById("contact-email");
-            let contactPhone = document.getElementById("contact-phone");
-            let totalPrice = document.getElementById("total-price");
-            
-            orderNumber.innerText = data["number"]
-            img.src = data["trip"]["attraction"]["image"];
-            attractionName.innerText = data["trip"]["attraction"]["name"];
-            date.innerText = data["trip"]["date"];
-            if (data["trip"]["time"] == "morning"){
-                time.innerText = "早上 9 點至 12 點";
-            } else{
-                time.innerText = "下午 1 點至 4 點";
-            }
-            price.innerText = data["price"];
-            address.innerText = data["trip"]["attraction"]["address"];
-            totalPrice.innerText = data["price"];
-
-            contactName.innerText = data["contact"]["name"];
-            contactEmail.innerText = data["contact"]["email"];
-            contactPhone.innerText = data["contact"]["phone"];
+        let orderNumber = document.getElementById("order-number");
+        let img = document.getElementById("image");
+        let attractionName = document.getElementById("attraction-name");
+        let date = document.getElementById("date");
+        let time = document.getElementById("time");
+        let price = document.getElementById("price");
+        let address = document.getElementById("address");
+        let contactName = document.getElementById("contact-name");
+        let contactEmail = document.getElementById("contact-email");
+        let contactPhone = document.getElementById("contact-phone");
+        let totalPrice = document.getElementById("total-price");
+        
+        orderNumber.innerText = data["number"]
+        img.src = data["trip"]["attraction"]["image"];
+        attractionName.innerText = data["trip"]["attraction"]["name"];
+        date.innerText = data["trip"]["date"];
+        if (data["trip"]["time"] == "morning"){
+            time.innerText = "早上 9 點至 12 點";
         } else{
-            document.getElementById("booking-msg").innerText = "目前沒有任何待預定的行程";
+            time.innerText = "下午 1 點至 4 點";
         }
+        price.innerText = data["price"];
+        address.innerText = data["trip"]["attraction"]["address"];
+        totalPrice.innerText = data["price"];
+
+        contactName.innerText = data["contact"]["name"];
+        contactEmail.innerText = data["contact"]["email"];
+        contactPhone.innerText = data["contact"]["phone"];
+        
     } else{
+        document.body.innerHTML = "";
         window.location.href = "/";
     }
 }
@@ -113,10 +112,10 @@ function repayOrder(){
                 await postRepayData(prime);
                 
                 if (repayData["data"]["payment"]["status"] == 0){
-                    console.log("重新付款成功")
+                    document.body.innerHTML = "";
                     location.href = `/thankyou?number=${orderNumber}`;
                 } else{
-                    repayMsg.innerText = "付款失敗，請重新確認信用卡資料，或洽信用卡發卡銀行處理";
+                    renderPaymentMsg(orderNumber);
                 }
             })            
         }

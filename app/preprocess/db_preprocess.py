@@ -116,7 +116,6 @@ TABLES['orders'] = (
     "  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
     "  `status` varchar(5) NOT NULL,"
     "  PRIMARY KEY (`order_number`),"
-    "  CONSTRAINT order_items UNIQUE (user_id, attraction_id, attraction_name, attraction_address, attraction_image, contact_name, contact_email, contact_phone, date, time, price),"
     "  FOREIGN KEY (`user_id`) REFERENCES member(`id`))")
 
 TABLES['payment'] = (

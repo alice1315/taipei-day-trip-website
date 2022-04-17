@@ -69,8 +69,7 @@ def sign_up():
         else:
             sql = ("INSERT INTO member (name, email, password) VALUES (%s, %s, %s)")
             sql_data = (name, email, password)
-            db.execute_sql(sql, sql_data, "one")
-            db.cnx.commit()
+            db.execute_sql(sql, sql_data, "one", commit=True)
 
             result_dict = {"ok": True}
             return jsonify(result_dict)

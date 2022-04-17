@@ -5,13 +5,12 @@ class Database:
     def __init__(self, config):
         self.config = config
         self.cnxpool = self.create_cnxpool()
-        self.cnx = self.get_connection()
 
     def create_cnxpool(self):
         try:
             cnxpool = pooling.MySQLConnectionPool(
                 pool_name = "cnxpool",
-                pool_size = 3,
+                pool_size = 5,
                 **self.config
             )
         except mysql.connector.Error as err:
@@ -19,14 +18,15 @@ class Database:
         
         return cnxpool
 
-    def get_connection(self):
-        cnx = self.cnxpool.get_connection()
+    def close(self, cursor, cnx):
+        cursor.close()
+        cnx.close()
 
-        return cnx
-
-    def execute_sql(self, sql, sql_data, method):
+    def execute_sql(self, sql, sql_data, method, commit=False):
         try:
-            cursor = self.cnx.cursor(dictionary = True)
+            cnx = self.cnxpool.get_connection()
+            cursor = cnx.cursor(dictionary = True)
+
             cursor.execute(sql, sql_data)
             if method == "one":
                 result = cursor.fetchone()
@@ -34,9 +34,15 @@ class Database:
                 result = cursor.fetchall()
             elif method == "rowcount":
                 result = cursor.rowcount
+
         except:
-            self.cnx.rollback()
+            cnx.rollback()
+
         finally:
-            cursor.close()
+            if commit is True:
+                cnx.commit()
+                self.close(cursor, cnx)
+            else:
+                self.close(cursor, cnx)
         
         return result
