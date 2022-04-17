@@ -1,6 +1,4 @@
-from flask import request
-from flask import make_response
-from flask import jsonify
+from flask import request, make_response, jsonify
 
 from . import api_
 from .. import db

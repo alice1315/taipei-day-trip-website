@@ -112,7 +112,7 @@ input, .tpfield{
     color: #CF4B49;
 }
 
-#order-msg{
+#order-msg, #repay-msg{
     margin-top: 10px;
     color: #CF4B49;
 }

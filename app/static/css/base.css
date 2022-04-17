@@ -154,7 +154,7 @@ li{
     to {opacity:1 ;}
 }
 
-.sign{
+.sign, .window-msg{
     position: fixed;
     top: 80px;
     left: 0;
@@ -177,16 +177,23 @@ li{
     from {top: 0;}
 }
 
-.sign-border{
+.msg-border{
     height: 10px;
     background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
     border-radius: 6px 6px 0 0;
 }
 
-.sign-title{
+.msg-title{
     margin: 15px;
     font-size: 24px;
     font-weight: bold;
+    text-align: center;
+}
+
+.msg-content{
+    padding: 10px 30px;
+    word-wrap: break-word;
+    text-align: center;
 }
 
 .close{

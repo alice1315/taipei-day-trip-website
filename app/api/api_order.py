@@ -91,7 +91,7 @@ def show_order(orderNumber):
         sql_data = (orderNumber, )
         result = db.execute_sql(sql, sql_data, "one")
 
-        y = lambda x: 1 if x == "未付款" else 0
+        y = lambda x: 0 if x == "已付款" else 1
         if result:
             result_dict = {
                 "data": {
@@ -210,9 +210,14 @@ def repay_order():
         data = request.get_json()
         prime = data["prime"]
         order_number = data["order"]["number"]
-        contact_name = data["order"]["contact"]["name"]
-        contact_email = data["order"]["contact"]["email"]
-        contact_phone = data["order"]["contact"]["phone"]
+
+        sql = ("SELECT contact_name, contact_email, contact_phone FROM orders WHERE user_id=%s and order_number=%s")
+        sql_data = (user_id, order_number)
+        result = db.execute_sql(sql, sql_data, "one")
+
+        contact_name = result["contact_name"]
+        contact_email = result["contact_email"]
+        contact_phone = result["contact_phone"]
 
         # Make a payment
         payment_result = make_payment(prime, order_number, contact_phone, contact_name, contact_email)
@@ -230,7 +235,7 @@ def repay_order():
                 result_dict = {"data": {"number": order_number, "payment": {"status": payment_result["status"], "message": payment_result["msg"]}}}
                 return jsonify(result_dict)
         else:
-            result_dict = {"error": True, "message": "訂單建立失敗"}
+            result_dict = {"error": True, "message": "重新付款失敗"}
             return make_response(jsonify(result_dict), 400)
 
     else:

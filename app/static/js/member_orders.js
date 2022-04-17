@@ -13,7 +13,6 @@ async function initMemberOrdersData(url, fetchOptions){
         memberOrdersData = result;
     })
 }
-    
 
 function renderMemberOrdersPage(){
     if(isSignedIn()){
@@ -126,6 +125,7 @@ function renderMemberOrdersPage(){
 
                 toggleOrderInfo(moreImg, orderInfo);
                 cancelOrder(cancelOrderBtn, orders[i]["number"]);
+                repayOrder(repayBtn, orders[i]["number"]);
             }
         } else{
             let orderMsg = document.getElementById("orders-msg");
@@ -146,10 +146,15 @@ function cancelOrder(btn, orderNumber){
     btn.addEventListener("click", async function(){
         await initMemberOrdersData("/api/order/" + orderNumber, {method: "DELETE"});
         if (memberOrdersData["ok"]){
-            console.log("取消成功");
+            renderWindowMsg("訂單取消成功", "可至訂單查詢確認", "reload");
         } else{
-            console.log("取消失敗");
+            renderWindowMsg("訂單取消失敗", "請重新操作或聯絡客服人員", "reload");
         }
-        location.reload(true);
     });
+}
+
+function repayOrder(btn, orderNumber){
+    btn.addEventListener("click", function(){
+        location.href = `/member/orders/repay?number=${orderNumber}`;
+    })
 }

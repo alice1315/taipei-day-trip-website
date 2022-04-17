@@ -9,3 +9,7 @@ def member_center():
 @member.route("/member/orders")
 def member_orders():
     return render_template("orders.html")
+
+@member.route("/member/orders/repay")
+def member_repay():
+    return render_template("repay.html")

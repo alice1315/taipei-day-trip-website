@@ -21,7 +21,6 @@
         </div>
         <div id="member-center">
             <ul>
-                <li>基本資料</li>
                 <li id="member-orders-btn"><a href="/member/orders">訂單查詢</a></li>
                 <li id="signout-btn">登出系統</li>
             </ul>
@@ -29,9 +28,9 @@
         
         <div id="modal" class="hide">
             <form id="signin-form" class="sign hide" method="PATCH">
-                <div class="sign-border"></div>
-                <div class="sign-title">登入會員帳號</div>
-                <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
+                <div class="msg-border"></div>
+                <div class="msg-title">登入會員帳號</div>
+                <a class="close sign-close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
 
                 <input id="signin-email" class="sign-input" type="email" placeholder="輸入電子信箱" ></input>
                 <input id="signin-pwd" class="sign-input" type="password" placeholder="輸入密碼" ></input>
@@ -42,9 +41,9 @@
             </form>
 
             <form class="sign hide" method="POST" id="signup-form">
-                <div class="sign-border"></div>
-                <div class="sign-title">註冊會員帳號</div>
-                <a class="close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
+                <div class="msg-border"></div>
+                <div class="msg-title">註冊會員帳號</div>
+                <a class="close sign-close"><img src="{{url_for('static', filename='img/icon_close.png')}}"/></a>
 
                 <input id="signup-name" class="sign-input" type="text" name="name" placeholder="輸入姓名" ></input>
                 <input id="signup-email" class="sign-input" type="email" name="email" placeholder="輸入電子信箱" ></input>

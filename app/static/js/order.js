@@ -58,7 +58,7 @@ function updateContactStatus(contact, msg){
     }
 }
 
-function checkStatus(){
+function checkOrderStatus(){
     let tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
     updateCardStatus(tappayStatus.status.number, document.getElementById("number-msg"));
@@ -119,7 +119,7 @@ async function postOrderData(prime){
 
 function makeOrder(){
     function handleMakeOrder(){
-        if(checkStatus()){
+        if(checkOrderStatus()){
             TPDirect.card.getPrime(async (result) => {
                 if (result.status !== 0){
                     console.log("get prime error " + result.msg);
@@ -129,8 +129,8 @@ function makeOrder(){
                 await postOrderData(prime);
                 
                 if (orderData["data"]["payment"]["status"] == 0){
-                    let order_number = orderData["data"]["number"];
-                    location.href = `/thankyou?number=${order_number}`;
+                    let orderNumber = orderData["data"]["number"];
+                    location.href = `/thankyou?number=${orderNumber}`;
                 } else{
                     orderMsg.innerText = "付款失敗，請重新確認信用卡資料，或洽信用卡發卡銀行處理";
                 }
