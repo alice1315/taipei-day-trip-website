@@ -8,7 +8,7 @@ var signInMsg = document.getElementById("signin-msg");
 var signUpMsg = document.getElementById("signup-msg");
 
 var signBtn = document.getElementById("header-sign-btn");
-var signOutBtn = document.getElementById("header-signout-btn");
+var memberBtn = document.getElementById("header-member-btn");
 
 async function baseInit(){
     checkSignedIn();
@@ -31,7 +31,7 @@ async function checkSignedIn(){
     let fetchOptions = {method: "GET"};
     await initUserData(fetchOptions);
     if(isSignedIn()){
-        toggleBlock(signBtn, signOutBtn);
+        toggleBlock(signBtn, memberBtn);
     }
     document.body.classList.remove("hide");
 }
@@ -114,6 +114,7 @@ function signOut(){
         }
     }
 
+    let signOutBtn = document.getElementById("signout-btn");
     signOutBtn.addEventListener("click", handleSignOutSubmit);
 }
 
@@ -139,7 +140,7 @@ function hideBlock(...targets){
     targets.forEach(target => target.classList.add("hide"))
 }
 
-function resetForm(targetForm, targetMsg, targetInputs){
+function resetForm(targetForm, targetMsg){
     targetForm.reset();
     targetMsg.innerText = "";
 }
@@ -147,6 +148,11 @@ function resetForm(targetForm, targetMsg, targetInputs){
 function handleSignBtn(){
     toggleBlock(modal, signInForm);
     signInForm.classList.add("slidein");
+}
+
+function handleMemberBtn(){
+    let memberCenter = document.getElementById("member-center");
+    memberCenter.classList.toggle("slideshow");
 }
 
 function handleBookingBtn(){
@@ -174,11 +180,48 @@ function handleBtns(){
     let bookingBtn = document.getElementById("header-booking-btn");
     let toSignInBtn = document.getElementById("open-signin");
     let toSignUpBtn = document.getElementById("open-signup");
-    let closeBtn = document.querySelectorAll(".close");
+    let closeBtn = document.querySelectorAll(".sign-close");
 
     signBtn.addEventListener("click", handleSignBtn);
     bookingBtn.addEventListener("click", handleBookingBtn);
+    memberBtn.addEventListener("click", handleMemberBtn);
     toSignInBtn.addEventListener("click", handleToSignBtn);
     toSignUpBtn.addEventListener("click", handleToSignBtn);
     closeBtn.forEach(e => e.addEventListener("click", handleCloseBtn));
+}
+
+function renderWindowMsg(title, content, reload){
+    let modal = document.createElement("div");
+    let windowMsg = document.createElement("div");
+    let msgBorder = document.createElement("div");
+    let closeCon = document.createElement("a");
+    let closeImg = document.createElement("img");
+    let msgTitle = document.createElement("div");
+    let msgContent = document.createElement("div");
+
+    modal.setAttribute("class", "modal");
+    windowMsg.setAttribute("class", "window-msg");
+    msgBorder.setAttribute("class", "msg-border");
+    closeCon.setAttribute("class", "close");
+    msgTitle.setAttribute("class", "msg-title");
+    msgContent.setAttribute("class", "msg-content");
+
+    closeImg.src = "/img/icon_close.png";
+    msgTitle.textContent = title;
+    msgContent.textContent = content;
+
+    document.body.appendChild(modal);
+    modal.appendChild(windowMsg);
+    windowMsg.appendChild(msgBorder);
+    windowMsg.appendChild(closeCon);
+    closeCon.appendChild(closeImg);
+    windowMsg.appendChild(msgTitle);
+    windowMsg.appendChild(msgContent);
+
+    closeCon.addEventListener("click", function(){
+        hideBlock(windowMsg);
+        if (reload == "reload"){
+            location.reload(true);
+        }
+    })
 }

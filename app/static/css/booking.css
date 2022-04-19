@@ -3,7 +3,7 @@
 }
 
 /* base */
-.content{
+#content{
     margin: 91px auto 100px auto;
     width: 1200px;
 }
@@ -112,13 +112,13 @@ input, .tpfield{
     color: #CF4B49;
 }
 
-#order-msg{
+#order-msg, #repay-msg{
     margin-top: 10px;
     color: #CF4B49;
 }
 
 @media screen and (min-width: 750px) and (max-width: 1250px){
-    .content{width: 95%;}
+    #content{width: 95%;}
 
     .block{width: 95%}
 
@@ -130,7 +130,7 @@ input, .tpfield{
 }
 
 @media screen and (max-width: 750px){
-    .content{width: 95%;}
+    #content{width: 95%;}
 
     .block{width: 95%}
 

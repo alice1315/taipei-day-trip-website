@@ -58,7 +58,7 @@ function updateContactStatus(contact, msg){
     }
 }
 
-function checkStatus(){
+function checkOrderStatus(){
     let tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
     updateCardStatus(tappayStatus.status.number, document.getElementById("number-msg"));
@@ -119,7 +119,7 @@ async function postOrderData(prime){
 
 function makeOrder(){
     function handleMakeOrder(){
-        if(checkStatus()){
+        if(checkOrderStatus()){
             TPDirect.card.getPrime(async (result) => {
                 if (result.status !== 0){
                     console.log("get prime error " + result.msg);
@@ -128,11 +128,12 @@ function makeOrder(){
                 let prime = result.card.prime;
                 await postOrderData(prime);
                 
+                let orderNumber = orderData["data"]["number"];
                 if (orderData["data"]["payment"]["status"] == 0){
-                    let order_number = orderData["data"]["number"];
-                    location.href = `/thankyou?number=${order_number}`;
+                    document.body.innerHTML = "";
+                    location.href = `/thankyou?number=${orderNumber}`;
                 } else{
-                    orderMsg.innerText = "付款失敗，請重新確認信用卡資料，或洽信用卡發卡銀行處理";
+                    renderPaymentMsg(orderNumber);
                 }
             })            
         }
@@ -140,4 +141,53 @@ function makeOrder(){
 
     let bookingBtn = document.getElementById("booking-btn");
     bookingBtn.addEventListener("click", handleMakeOrder);
+}
+
+function renderPaymentMsg(orderNumber){
+    let modal = document.createElement("div");
+    let windowMsg = document.createElement("div");
+    let msgBorder = document.createElement("div");
+    let msgTitle = document.createElement("div");
+    let orderCon = document.createElement("div");
+    let msgContent = document.createElement("div");
+    let btnCon = document.createElement("div");
+    let repayBtn = document.createElement("button");
+    let continueBtn = document.createElement("button");
+
+    modal.setAttribute("class", "modal");
+    windowMsg.setAttribute("class", "window-msg");
+    msgBorder.setAttribute("class", "msg-border");
+    msgTitle.setAttribute("class", "msg-title");
+    orderCon.setAttribute("class", "msg-content");
+    msgContent.setAttribute("class", "msg-content");
+    btnCon.setAttribute("class", "msg-btn-con");
+    repayBtn.setAttribute("class", "btn");
+    continueBtn.setAttribute("class", "btn");
+
+    msgTitle.textContent = "付款失敗";
+    orderCon.textContent = "您的訂單號碼為： " + orderNumber;
+    msgContent.textContent = "請確認信用卡資訊或洽信用卡發卡銀行處裡";
+    repayBtn.innerHTML = "重新付款";
+    continueBtn.innerHTML = "繼續瀏覽"
+
+    document.body.appendChild(modal);
+    modal.appendChild(windowMsg);
+    windowMsg.appendChild(msgBorder);
+    windowMsg.appendChild(msgTitle);
+    windowMsg.appendChild(orderCon);
+    windowMsg.appendChild(msgContent);
+    windowMsg.appendChild(btnCon);
+    btnCon.appendChild(repayBtn);
+    btnCon.appendChild(continueBtn);
+    
+
+    repayBtn.addEventListener("click", function(){
+        document.body.innerHTML = "";
+        location.href = `/member/orders/repay?number=${orderNumber}`;
+    })
+
+    continueBtn.addEventListener("click", function(){
+        document.body.innerHTML = "";
+        window.location.href = "/";
+    })
 }

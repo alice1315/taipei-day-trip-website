@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/member_orders.css')}}" />
+    </head>
+
+    <body onload="baseInit(); memberOrdersInit();">
+        {% extends "base.html" %}
+
+        {% block body %}
+        <div id="content">
+            <div class="page-title">訂單資料</div>
+            <ul id="order-menu">
+                <li class="title">訂購日期</li>
+                <li class="title">訂單號碼</li>
+                <li class="title order-items-1">訂購內容</li>
+                <li class="title">訂單狀態</li>
+            </ul>
+        </div>
+        <div id="orders-msg"></div>
+
+        <script src="{{url_for('static', filename='js/member_orders.js')}}"></script>
+        <script src="{{url_for('static', filename='js/order.js')}}"></script>
+        {% endblock body %}
+
+    </body>
+</html>

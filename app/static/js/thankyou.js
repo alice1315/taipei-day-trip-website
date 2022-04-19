@@ -18,10 +18,11 @@ async function initOrderNumberData(){
 }
 
 function renderThankyouPage(){
-    if (isSignedIn() & orderNumberData["data"] != null){
+    if (isSignedIn() & orderNumberData["data"]["status"] == 0){
         document.getElementById("content").classList.remove("hide");
         document.getElementById("order-number").innerText = orderNumberData["data"]["number"];
     } else{
+        document.body.innerHTML = "";
         window.location.href = "/";
     }
 }

@@ -4,13 +4,15 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/booking.css')}}" />
     </head>
 
-    <body onload="baseInit(); bookingInit();">
+    <body onload="baseInit(); repayInit();">
         {% extends "base.html" %}
 
         {% block body %}
+        
         <div id="content">
+            
             <div class="block">
-                <div id="top" class="booking-title hide">您好，<span id="name"></span>，待預訂的行程如下：</div>
+                <div id="top" class="booking-title hide">您好，<span id="name"></span>，訂單號碼 <span id="order-number"></span> 欲重新付款的行程如下：</div>
             </div>
             <div id="booking" class="hide">
                 <div class="block">
@@ -35,7 +37,6 @@
                                 <div id="address" class="text"></div>
                             </div>
                         </div>
-                        <a id="delete"><img src="{{url_for('static', filename='img/icon_delete.png')}}"/></a>
                     </div>
                 </div>
     
@@ -45,21 +46,18 @@
                     <div class="booking-title">您的聯絡資訊</div>
                     <div class="input-box">
                         <div class="text">聯絡姓名： </div>
-                        <input id="contact-name" type="text" />
-                        <div id="name-msg" class="order-msg"></div>
+                        <div id="contact-name"></div>
                     </div>
                     <div class="input-box">
                         <div class="text">聯絡信箱： </div>
-                        <input id="contact-email" type="email"/>
-                        <div id="email-msg" class="order-msg"></div>
+                        <div id="contact-email"></div>
                     </div>
                     <div class="input-box">
                         <div class="text">手機號碼： </div>
-                        <input id="contact-phone" type="text"/>
-                        <div id="phone-msg" class="order-msg"></div>
+                        <div id="contact-phone"></div>
                     </div>
                     
-                    <div class="text bold">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+                    <div class="text bold">若需修改聯絡方式，請重新預定行程。</div>
                 </form>
     
                 <hr/>
@@ -87,15 +85,14 @@
     
                 <div class="block bottom">
                     <div class="title">總價：新台幣 <span id="total-price"></span> 元</div>
-                    <button id="booking-btn" class="btn">確認訂購並付款</button>
-                    <div id="order-msg"></div>
+                    <button id="repay-btn" class="btn">確認重新付款</button>
+                    <div id="repay-msg"></div>
                 </div>
             </div>
-            <div id="booking-msg" class="block"></div>
         </div>   
 
         <script src="https://js.tappaysdk.com/tpdirect/v5.8.0"></script>        
-        <script src="{{url_for('static', filename='js/booking.js')}}"></script>
+        <script src="{{url_for('static', filename='js/repay.js')}}"></script>
         <script src="{{url_for('static', filename='js/order.js')}}"></script>
         {% endblock body %}
 

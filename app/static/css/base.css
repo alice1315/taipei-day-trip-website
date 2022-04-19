@@ -91,8 +91,54 @@ li{
     color: #666666;
 }
 
+#member-center{
+    position: fixed;
+    z-index: 2;
+    width: 1200px;
+    height: 0;
+    overflow-y: hidden;
+    top: 54px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: height 0.5s ease-in-out;
+}
+
+#member-center.slideshow{
+    height: 100%;
+}
+
+#member-center ul{
+    position: relative;
+    float: right;
+    width: 100px;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+}
+
+#member-center ul li{
+    width: 100px;
+    line-height: 40px;
+    border-right: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
+    border-left: 1px solid #E8E8E8;
+    text-align: center;
+}
+
+#member-center ul li:hover{
+    background-color: #E8E8E8;
+}
+
+#member-center ul li a{
+    color: inherit;
+    text-decoration: none;
+}
+
 /* sign */
-#modal{
+#modal, .modal{
     position: fixed;
     top: 0;
     left: 0;
@@ -108,7 +154,7 @@ li{
     to {opacity:1 ;}
 }
 
-.sign{
+.sign, .window-msg{
     position: fixed;
     top: 80px;
     left: 0;
@@ -124,24 +170,37 @@ li{
 
 
 .slidein{
-    animation: appear 0.5s;
-    animation-fill-mode: forwards;
+    animation: appear 0.5s forwards;
 }
 
 @keyframes appear {
     from {top: 0;}
 }
 
-.sign-border{
+/* MSG */
+.msg-border{
     height: 10px;
     background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
     border-radius: 6px 6px 0 0;
 }
 
-.sign-title{
+.msg-title{
     margin: 15px;
     font-size: 24px;
     font-weight: bold;
+    text-align: center;
+}
+
+.msg-content{
+    padding: 10px 15px;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.msg-btn-con{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0 10px 0;
 }
 
 .close{
@@ -182,6 +241,48 @@ li{
     text-decoration: underline;
 }
 
+.loading{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+
+/* Loading GIF*/
+.lds-ring {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 50px auto;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 6px solid #448899;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #448899 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
 /* footer */
 .footer{
     width: 100%;
@@ -197,10 +298,41 @@ li{
 
 @media screen and (min-width: 600px) and (max-width: 1400px){
     .container{width: 90%;}
+
+    #member-center{width: 90%;}
 }
 
-@media screen and (max-width: 600px){
+@media screen and (min-width: 370px) and (max-width: 600px){
     .container{width: 92%}
+
+    #member-center{width: 92%;}
+
+    #member-center ul {
+        width: 85px;
+    }
+
+    #member-center ul li{
+        width: 85px;
+    }
+
+    li{
+        width: 72px;
+        margin-right: 5px;
+    }
+}
+
+@media screen and (max-width: 370px){
+    .container{width: 92%}
+
+    #member-center{width: 100%;}
+
+    #member-center ul {
+        width: 100px;
+    }
+
+    #member-center ul li{
+        width: 100px;
+    }
 
     li{
         width: 72px;
